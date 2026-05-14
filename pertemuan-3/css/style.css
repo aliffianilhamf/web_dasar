@@ -1,0 +1,137 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* body {
+  background-color: #f0f0f0;
+  font-family: Arial, sans-serif;
+}
+
+/* Element Selector - menarget semua elemen dengan tag tersebut */
+
+p {
+  color: red;
+}
+
+a {
+  color: black;
+}
+
+/* Class Selector - menggunakan titik (.) sebelum nama kelas nya */
+.judul {
+  color: blue;
+}
+
+/* ID selector - menggunakan pagar (#) sebelum nama id nya */
+#kontak {
+  color: green;
+}
+*/
+
+/* Universal Selector - menarget semua elemen */
+* {
+  color: purple;
+}
+
+/* Descendant - elemen di dalam elemen tertentu */
+nav ul {
+  color: orange;
+}
+
+/* grouping - beberapa selector sekaligus, dan dipisahkan menggunakan koma */
+h1,
+h2,
+h3 {
+  color: orange;
+}
+
+/* pseudo-class - kondisi / status tertentu sebuah elemen */
+a:hover {
+  color: red;
+}
+
+/* CSS BOX MODEL */
+.box {
+  /* width: 200px;
+  hight: 200px; */
+  border: 2px solid black;
+  /* padding: 20px; */
+  /* padding: 20px 15px 10px 5px; */
+  /* padding-top: 20px;
+  padding-right: 15px;
+  padding-bottom: 10px;
+  padding-left: 5px; */
+  /* padding: 20px 15px; */
+
+  /* margin: 20px; */
+  /* margin: 20px 15px 10px 5px;
+  margin-top: 20px;
+  margin-right: 15px;
+  margin-bottom: 10px;
+  margin-left: 5px;
+
+  margin: 20px 15px; */
+
+  margin: 20px auto;
+}
+
+.card {
+  border: 1px solid black; /*Garis tepi dari suatu elemen */
+  /* border-radius: 10px 5px 3px 2px; /* Membuat sudut dari suatu elemen menjadi melengkung */
+  border-radius: 10px; /* Membuat sudut dari suatu elemen menjadi melengkung */
+  box-shadow: 5px px 10px rgba(0, 0, 0, 0.5); /* Memberikan efek bayangan pada suatu elemen */
+}
+
+.box2 {
+  width: 200px;
+  height: 200px;
+  border: 1px solid black;
+  border-radius: 100px;
+  box-shadow: 20px 0 20px rgba(0, 0, 0, 0.5);
+}
+
+/* tipografi */
+body {
+  font-family: "Segoe UI", arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: black;
+  /* background-color: #333; */
+}
+
+h2 {
+  font-size: 24px;
+  /* nama warnanya */
+  /* color: blue; */
+  /* heksadesimal */
+  /* color: #7a7af8; */
+  /* rgb */
+  /* color: rgb(47, 47, 86); */
+  /* rgba */
+  color: rgba(47, 47, 86, 0.5);
+  font-weight: bold;
+  text-align: center;
+  letter-spacing: 2px;
+
+
+}
+
+
+.container {
+    background-color: aqua;
+    display:flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap : 10px;
+}
+.item {
+    background-color: yellow;
+    flex: 1;
+    align-self:  center;
+}
