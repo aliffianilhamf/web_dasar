@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belajar CSS Display Properties</title>
+    <style>
+        /* ============================================
+           STYLING UMUM
+           ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 40px;
+            font-size: 36px;
+        }
+
+        h2 {
+            color: #34495e;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #555;
+            margin-top: 20px;
+            margin-bottom: 15px;
+        }
+
+        p,
+        .note {
+            margin-bottom: 15px;
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        .note {
+            background-color: #e8f4f8;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            border-radius: 4px;
+        }
+
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #c7254e;
+        }
+
+        .code-block {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .example-box {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            border: 2px solid #ecf0f1;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-link {
+            display: inline-block;
+            color: #3498db;
+            text-decoration: none;
+            margin-bottom: 20px;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        /* ============================================
+           DEMO BOXES - Menampilkan display properties
+           ============================================ */
+
+        .demo-container {
+            background-color: #fff9e6;
+            padding: 20px;
+            border: 2px solid #f39c12;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .demo-label {
+            background-color: #f39c12;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-weight: bold;
+            font-size: 12px;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        /* ============================================
+           1. DISPLAY: BLOCK
+           ============================================ */
+
+        .block-demo {
+            background-color: #3498db;
+            color: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            display: block;
+        }
+
+        .block-info {
+            background-color: #d5f4e6;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 3px;
+            border-left: 4px solid #27ae60;
+            display: block;
+        }
+
+        /* ============================================
+           2. DISPLAY: INLINE
+           ============================================ */
+
+        .inline-demo {
+            background-color: #e74c3c;
+            color: white;
+            padding: 10px 15px;
+            margin: 5px;
+            border-radius: 5px;
+            display: inline;
+        }
+
+        .inline-info {
+            background-color: #fadbd8;
+            padding: 5px 10px;
+            margin: 3px;
+            border-radius: 3px;
+            border-left: 4px solid #c0392b;
+            display: inline;
+        }
+
+        /* ============================================
+           3. DISPLAY: INLINE-BLOCK
+           ============================================ */
+
+        .inline-block-demo {
+            background-color: #9b59b6;
+            color: white;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 5px;
+            display: inline-block;
+            width: 150px;
+            text-align: center;
+            min-height: 50px;
+            vertical-align: top;
+        }
+
+        .inline-block-info {
+            background-color: #f4ecf7;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 3px;
+            border-left: 4px solid #8e44ad;
+            display: inline-block;
+            width: 45%;
+            vertical-align: top;
+        }
+
+        /* ============================================
+           4. DISPLAY: NONE
+           ============================================ */
+
+        .hidden-element {
+            background-color: #95a5a6;
+            color: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+
+        .hidden-demo {
+            display: none;
+        }
+
+        .visible-demo {
+            display: block;
+        }
+
+        .toggle-button {
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .toggle-button:hover {
+            background-color: #34495e;
+        }
+
+        /* ============================================
+           5. DISPLAY: FLEX (Intro)
+           ============================================ */
+
+        .flex-demo {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .flex-item {
+            background-color: #16a085;
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+        }
+
+        /* ============================================
+           6. DISPLAY: GRID (Intro)
+           ============================================ */
+
+        .grid-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .grid-item {
+            background-color: #2980b9;
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        /* ============================================
+           COMPARISON TABLE
+           ============================================ */
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .comparison-table thead {
+            background-color: #34495e;
+            color: white;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .comparison-table tbody tr:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+
+        .comparison-table tbody tr:hover {
+            background-color: #e8f4f8;
+        }
+
+        .comparison-table code {
+            display: block;
+            margin: 5px 0;
+        }
+
+        /* ============================================
+           BOX MODEL VISUALIZATION
+           ============================================ */
+
+        .box-model {
+            background-color: #fff;
+            padding: 30px;
+            margin: 20px;
+            border: 3px solid #3498db;
+            text-align: center;
+            display: inline-block;
+            min-width: 200px;
+        }
+
+        .box-label {
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 14px;
+        }
+
+        .box-content {
+            background-color: #3498db;
+            color: white;
+            padding: 40px;
+            margin: 10px;
+            border-radius: 5px;
+        }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 24px;
+            }
+
+            .inline-block-info {
+                width: 100%;
+                margin: 10px 0;
+            }
+
+            .comparison-table {
+                font-size: 13px;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="back-link">← Kembali ke: <a href="index.html">index.html</a> | <a
+                href="belajar-css-concepts.html">belajar-css-concepts.html</a></div>
+
+        <h1>🎓 Belajar CSS Display Properties</h1>
+        <p style="text-align: center; font-size: 16px; color: #666; margin-bottom: 30px;">
+            Display menentukan bagaimana elemen ditampilkan di halaman (block, inline, inline-block, none, flex, grid)
+        </p>
+
+        <!-- ============================================
+             1. DISPLAY: BLOCK
+             ============================================ -->
+        <h2>1️⃣ DISPLAY: BLOCK</h2>
+
+        <div class="example-box">
+            <h3>Pengertian Block</h3>
+            <p><code>display: block</code> membuat elemen mengambil seluruh lebar yang tersedia (100%). Elemen block
+                selalu dimulai dari baris baru dan memaksa elemen berikutnya ke baris baru juga.</p>
+
+            <div class="code-block">
+                display: block;
+            </div>
+
+            <h3>Karakteristik Block:</h3>
+            <ul style="margin-left: 20px; margin-bottom: 15px;">
+                <li>✅ Mengambil 100% lebar (atau sesuai parent width)</li>
+                <li>✅ Selalu dimulai baris baru</li>
+                <li>✅ Margin & padding bekerja di semua sisi</li>
+                <li>✅ Width & height bisa diatur</li>
+                <li>❌ Tidak bisa di-align horizontally dengan elemen lain di baris yang sama</li>
+            </ul>
+
+            <h3>Contoh Element Block Default:</h3>
+            <p style="color: #555;">Tag-tag ini secara default adalah block:</p>
+            <div class="code-block">
+                &lt;div&gt;, &lt;p&gt;, &lt;h1&gt;-&lt;h6&gt;, &lt;header&gt;, &lt;footer&gt;, &lt;nav&gt;,
+                &lt;section&gt;, &lt;article&gt;, &lt;ul&gt;, &lt;ol&gt;, &lt;li&gt;
+            </div>
+
+            <h3>Demo Visualisasi:</h3>
+            <div class="demo-container">
+                <div class="demo-label">display: block</div>
+
+                <div class="block-demo">
+                    Box 1 - display: block (100% lebar)
+                </div>
+
+                <div class="block-demo">
+                    Box 2 - display: block (100% lebar)
+                </div>
+
+                <div class="block-demo">
+                    Box 3 - display: block (100% lebar)
+                </div>
+
+                <div class="note" style="margin-top: 15px;">
+                    Lihat? Setiap box mengambil 100% lebar dan dimulai dari baris baru!
+                </div>
+            </div>
+
+            <h3>Kode HTML:</h3>
+            <div class="code-block">
+                &lt;div class="block-demo"&gt;Box 1&lt;/div&gt;
+                &lt;div class="block-demo"&gt;Box 2&lt;/div&gt;
+                &lt;div class="block-demo"&gt;Box 3&lt;/div&gt;
+
+                &lt;style&gt;
+                .block-demo {
+                display: block;
+                background: #3498db;
+                padding: 20px;
+                margin-bottom: 15px;
+                }
+                &lt;/style&gt;
+            </div>
+        </div>
+
+        <!-- ============================================
+             2. DISPLAY: INLINE
+             ============================================ -->
+        <h2>2️⃣ DISPLAY: INLINE</h2>
+
+        <div class="example-box">
+            <h3>Pengertian Inline</h3>
+            <p><code>display: inline</code> membuat elemen hanya mengambil lebar yang dibutuhkan. Elemen inline bisa
+                berdampingan dengan elemen lain di baris yang sama, seperti teks biasa.</p>
+
+            <div class="code-block">
+                display: inline;
+            </div>
+
+            <h3>Karakteristik Inline:</h3>
+            <ul style="margin-left: 20px; margin-bottom: 15px;">
+                <li>✅ Hanya mengambil lebar sesuai konten</li>
+                <li>✅ Bisa berdampingan dengan elemen lain di baris sama</li>
+                <li>✅ Tidak ada baris baru sebelum/sesudah</li>
+                <li>❌ Width & height TIDAK bisa diatur</li>
+                <li>❌ Margin-top & margin-bottom tidak bekerja</li>
+                <li>⚠️ Padding bekerja tapi bisa overlap elemen lain</li>
+            </ul>
+
+            <h3>Contoh Element Inline Default:</h3>
+            <p style="color: #555;">Tag-tag ini secara default adalah inline:</p>
+            <div class="code-block">
+                &lt;span&gt;, &lt;a&gt;, &lt;strong&gt;, &lt;em&gt;, &lt;img&gt;, &lt;button&gt;, &lt;input&gt;,
+                &lt;label&gt;
+            </div>
+
+            <h3>Demo Visualisasi:</h3>
+            <div class="demo-container">
+                <div class="demo-label">display: inline</div>
+
+                <div>
+                    Ini adalah teks normal
+                    <span class="inline-demo">Box 1 (inline)</span>
+                    dilanjut dengan teks
+                    <span class="inline-demo">Box 2 (inline)</span>
+                    dan lagi teks
+                    <span class="inline-demo">Box 3 (inline)</span>
+                    semuanya di baris yang sama!
+                </div>
+
+                <div class="note" style="margin-top: 15px;">
+                    Lihat? Semua box berada di baris yang sama, berdampingan seperti teks!
+                </div>
+            </div>
+
+            <h3>Kode HTML:</h3>
+            <div class="code-block">
+                Teks normal
+                &lt;span class="inline-demo"&gt;Box 1&lt;/span&gt;
+                teks lanjutan
+                &lt;span class="inline-demo"&gt;Box 2&lt;/span&gt;
+
+                &lt;style&gt;
+                .inline-demo {
+                display: inline;
+                background: #e74c3c;
+                padding: 10px 15px;
+                margin: 5px; /* Top/bottom tidak bekerja! */
+                }
+                &lt;/style&gt;
+            </div>
+        </div>
+
+        <!-- ============================================
+             3. DISPLAY: INLINE-BLOCK
+             ============================================ -->
+        <h2>3️⃣ DISPLAY: INLINE-BLOCK</h2>
+
+        <div class="example-box">
+            <h3>Pengertian Inline-Block</h3>
+            <p><code>display: inline-block</code> adalah kombinasi TERBAIK dari block dan inline. Elemen mengambil hanya
+                lebar yang dibutuhkan (seperti inline) TAPI bisa diatur width/height (seperti block).</p>
+
+            <div class="code-block">
+                display: inline-block;
+            </div>
+
+            <h3>Karakteristik Inline-Block:</h3>
+            <ul style="margin-left: 20px; margin-bottom: 15px;">
+                <li>✅ Hanya mengambil lebar sesuai konten (atau width yang ditentukan)</li>
+                <li>✅ Bisa berdampingan dengan elemen lain di baris sama</li>
+                <li>✅ Width & height BISA diatur ✨</li>
+                <li>✅ Margin & padding bekerja di semua sisi ✨</li>
+                <li>⚠️ Ada space kecil antar elemen (karena dianggap inline)</li>
+            </ul>
+
+            <h3>Gunakan Kapan?</h3>
+            <ul style="margin-left: 20px; margin-bottom: 15px;">
+                <li>Menu horizontal dengan button</li>
+                <li>Badge atau tag yang ingin ditampilkan berdampingan</li>
+                <li>Card mini yang ingin multiple per baris</li>
+                <li>Tombol-tombol yang ingin sejajar</li>
+            </ul>
+
+            <h3>Demo Visualisasi:</h3>
+            <div class="demo-container">
+                <div class="demo-label">display: inline-block</div>
+
+                <div style="text-align: center;">
+                    <div class="inline-block-demo">Box 1</div>
+                    <div class="inline-block-demo">Box 2</div>
+                    <div class="inline-block-demo">Box 3</div>
+                </div>
+
+                <div class="note" style="margin-top: 15px;">
+                    Lihat? Box bisa berdampingan (inline) tapi punya width/height tetap (block)!
+                </div>
+            </div>
+
+            <h3>Kode HTML:</h3>
+            <div class="code-block">
+                &lt;div class="inline-block-demo"&gt;Box 1&lt;/div&gt;
+                &lt;div class="inline-block-demo"&gt;Box 2&lt;/div&gt;
+                &lt;div class="inline-block-demo"&gt;Box 3&lt;/div&gt;
+
+                &lt;style&gt;
+                .inline-block-demo {
+                display: inline-block;
+                width: 150px; /* Bisa diatur! */
+                height: 80px; /* Bisa diatur! */
+                padding: 20px; /* Bekerja semua sisi */
+                margin: 10px; /* Bekerja semua sisi */
+                vertical-align: top; /* Align vertical */
+                }
+                &lt;/style&gt;
+            </div>
+        </div>
+
+        <!-- ============================================
+             4. DISPLAY: NONE
+             ============================================ -->
+        <h2>4️⃣ DISPLAY: NONE</h2>
+
+        <div class="example-box">
+            <h3>Pengertian None</h3>
+            <p><code>display: none</code> menyembunyikan elemen sepenuhnya dari halaman. Elemen tidak ditampilkan DAN
+                tidak mengambil ruang di layout.</p>
+
+            <div class="code-block">
+                display: none;
+            </div>
+
+            <h3>Karakteristik None:</h3>
+            <ul style="margin-left: 20px; margin-bottom: 15px;">
+                <li>✅ Elemen tidak terlihat</li>
+                <li>✅ Elemen tidak mengambil ruang apapun di layout</li>
+                <li>✅ Cocok untuk show/hide dengan JavaScript</li>
+                <li>ℹ️ Berbeda dengan <code>visibility: hidden</code> (tetap mengambil ruang)</li>
+            </ul>
+
+            <h3>Demo Visualisasi:</h3>
+            <div class="demo-container">
+                <div class="demo-label">display: none vs block</div>
+
+                <button class="toggle-button" onclick="toggleHidden()">
+                    👁️ Klik untuk Toggle Hidden Element
+                </button>
+
+                <p>Teks sebelum elemen hidden</p>
+
+                <div id="hiddenElement" class="hidden-demo hidden-element">
+                    🔒 Elemen yang bisa disembunyikan dengan display: none
+                </div>
+
+                <p>Teks sesudah elemen hidden - jika elemen hidden, tidak ada gap di sini!</p>
+
+                <div class="note">
+                    Klik tombol di atas untuk toggle elemen. Perhatikan tidak ada space ketika tersembunyi!
+                </div>
+            </div>
+
+            <h3>Kode HTML & JavaScript:</h3>
+            <div class="code-block">
+                &lt;button onclick="toggleHidden()"&gt;Toggle Hidden&lt;/button&gt;
+
+                &lt;div id="hiddenElement" class="hidden-demo"&gt;
+                Elemen yang bisa disembunyikan
+                &lt;/div&gt;
+
+                &lt;script&gt;
+                function toggleHidden() {
+                const elem = document.getElementById('hiddenElement');
+                if (elem.style.display === 'none') {
+                elem.style.display = 'block';
+                } else {
+                elem.style.display = 'none';
+                }
+                }
+                &lt;/script&gt;
+
+                &lt;style&gt;
+                .hidden-demo {
+                display: none; /* Tersembunyi awal */
+                }
+                &lt;/style&gt;
+            </div>
+
+            <h3>Perbedaan: display: none vs visibility: hidden</h3>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Property</th>
+                        <th>Terlihat?</th>
+                        <th>Mengambil Ruang?</th>
+                        <th>Gunakan Ketika...</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>display: none</code></td>
+                        <td>❌ Tidak</td>
+                        <td>❌ Tidak</td>
+                        <td>Ingin elemen hilang total (show/hide)</td>
+                    </tr>
+                    <tr>
+                        <td><code>visibility: hidden</code></td>
+                        <td>❌ Tidak</td>
+                        <td>✅ Ya (ada space kosong)</td>
+                        <td>Ingin elemen tidak terlihat tapi tetap reserved space</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ============================================
+             5. DISPLAY: FLEX (Intro)
+             ============================================ -->
+        <h2>5️⃣ DISPLAY: FLEX - Layout 1D</h2>
+
+        <div class="example-box">
+            <h3>Pengertian Flex (Singkat)</h3>
+            <p><code>display: flex</code> membuat elemen anak berdampingan secara otomatis (seperti inline-block tapi
+                lebih powerful). Cocok untuk navbar, button groups, atau layout 1 baris.</p>
+
+            <div class="code-block">
+                display: flex;
+                gap: 15px; /* Jarak antar item */
+            </div>
+
+            <h3>Demo Flex:</h3>
+            <div class="demo-container">
+                <div class="demo-label">display: flex</div>
+
+                <div class="flex-demo">
+                    <div class="flex-item">Item 1</div>
+                    <div class="flex-item">Item 2</div>
+                    <div class="flex-item">Item 3</div>
+                    <div class="flex-item">Item 4</div>
+                </div>
+
+                <div class="note">
+                    Semua item berdampingan otomatis! Responsive juga (wrap ke baris baru di mobile)
+                </div>
+            </div>
+
+            <p style="color: #666; font-size: 14px; margin-top: 15px;">
+                ℹ️ <strong>Pelajari Flex lebih detail</strong> di file <code>belajar-css-concepts.html</code>
+            </p>
+        </div>
+
+        <!-- ============================================
+             6. DISPLAY: GRID (Intro)
+             ============================================ -->
+        <h2>6️⃣ DISPLAY: GRID - Layout 2D</h2>
+
+        <div class="example-box">
+            <h3>Pengertian Grid (Singkat)</h3>
+            <p><code>display: grid</code> membuat layout 2 dimensi dengan baris DAN kolom. Cocok untuk dashboard,
+                gallery foto, atau layout kompleks.</p>
+
+            <div class="code-block">
+                display: grid;
+                grid-template-columns: repeat(3, 1fr); /* 3 kolom */
+                gap: 15px;
+            </div>
+
+            <h3>Demo Grid:</h3>
+            <div class="demo-container">
+                <div class="demo-label">display: grid (3 kolom)</div>
+
+                <div class="grid-demo">
+                    <div class="grid-item">Item 1</div>
+                    <div class="grid-item">Item 2</div>
+                    <div class="grid-item">Item 3</div>
+                    <div class="grid-item">Item 4</div>
+                    <div class="grid-item">Item 5</div>
+                    <div class="grid-item">Item 6</div>
+                </div>
+
+                <div class="note">
+                    Grid otomatis membagi dalam 3 kolom! Lebih terstruktur dari Flex.
+                </div>
+            </div>
+
+            <p style="color: #666; font-size: 14px; margin-top: 15px;">
+                ℹ️ <strong>Pelajari Grid lebih detail</strong> di file <code>belajar-css-concepts.html</code>
+            </p>
+        </div>
+
+        <!-- ============================================
+             COMPARISON TABLE
+             ============================================ -->
+        <h2>📋 Perbandingan Semua Display Values</h2>
+
+        <div class="example-box">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Display Value</th>
+                        <th>Lebar</th>
+                        <th>Berdampingan?</th>
+                        <th>Width/Height?</th>
+                        <th>Gunakan Ketika...</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>block</code></td>
+                        <td>100%</td>
+                        <td>❌ Tidak (baris baru)</td>
+                        <td>✅ Ya</td>
+                        <td>Container, section, paragraph</td>
+                    </tr>
+                    <tr>
+                        <td><code>inline</code></td>
+                        <td>Sesuai konten</td>
+                        <td>✅ Ya</td>
+                        <td>❌ Tidak</td>
+                        <td>Teks biasa, link, span</td>
+                    </tr>
+                    <tr>
+                        <td><code>inline-block</code></td>
+                        <td>Sesuai konten</td>
+                        <td>✅ Ya</td>
+                        <td>✅ Ya</td>
+                        <td>Button, badge, menu items</td>
+                    </tr>
+                    <tr>
+                        <td><code>none</code></td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>Sembunyikan elemen total</td>
+                    </tr>
+                    <tr>
+                        <td><code>flex</code></td>
+                        <td>Berbeda</td>
+                        <td>✅ Ya (fleksibel)</td>
+                        <td>✅ Ya</td>
+                        <td>Navbar, button groups, 1 baris</td>
+                    </tr>
+                    <tr>
+                        <td><code>grid</code></td>
+                        <td>Berbeda</td>
+                        <td>✅ Ya (terstruktur)</td>
+                        <td>✅ Ya</td>
+                        <td>Gallery, dashboard, layout kompleks</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ============================================
+             PRAKTIK UMUM
+             ============================================ -->
+        <h2>💡 Praktik Umum di Website</h2>
+
+        <div class="example-box">
+            <h3>Struktur Website Typical:</h3>
+            <div class="code-block">
+                &lt;header&gt; { display: block; } /* Full width */
+                &lt;nav&gt; { display: flex; } /* Menu items horizontal */
+
+                &lt;main&gt; { display: block; } /* Full width */
+                &lt;article&gt; { display: block; }
+                &lt;sidebar&gt; { display: block; }
+
+                &lt;footer&gt; { display: block; } /* Full width */
+                &lt;ul&gt; { display: flex; } /* Footer links horizontal */
+            </div>
+
+            <h3>Contoh Kombinasi:</h3>
+            <div class="code-block">
+                /* Navigation Bar */
+                .navbar { display: flex; gap: 20px; }
+                .nav-item { display: inline-block; padding: 10px; }
+
+                /* Card Grid */
+                .card-container { display: grid; grid-template-columns: repeat(3, 1fr); }
+                .card { display: block; }
+
+                /* Product Listing */
+                .products { display: flex; flex-wrap: wrap; }
+                .product { display: inline-block; width: 23%; margin: 1%; }
+            </div>
+
+            <div class="note">
+                <strong>🎯 Golden Rules:</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>Gunakan <code>block</code> untuk container utama</li>
+                    <li>Gunakan <code>flex</code> untuk layout 1 baris (nav, buttons)</li>
+                    <li>Gunakan <code>grid</code> untuk layout 2D kompleks</li>
+                    <li>Gunakan <code>inline-block</code> untuk element kecil berdampingan</li>
+                    <li>Jangan lupa <code>gap</code> untuk jarak otomatis di flex/grid</li>
+                </ul>
+            </div>
+        </div>
+
+        <br><br>
+    </div>
+
+    <script>
+        function toggleHidden() {
+            const elem = document.getElementById('hiddenElement');
+            if (elem.style.display === 'none') {
+                elem.style.display = 'block';
+            } else {
+                elem.style.display = 'none';
+            }
+        }
+
+        // Set initial display none
+        document.getElementById('hiddenElement').style.display = 'none';
+    </script>
+</body>
+
+</html>

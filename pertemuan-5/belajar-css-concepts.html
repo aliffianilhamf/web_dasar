@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belajar CSS Grid, Gradient, Transform & Selector</title>
+    <style>
+        /* ============================================
+           STYLING UMUM
+           ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 40px;
+            font-size: 36px;
+        }
+
+        h2 {
+            color: #34495e;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #555;
+            margin-top: 20px;
+            margin-bottom: 15px;
+        }
+
+        p,
+        .note {
+            margin-bottom: 15px;
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        .note {
+            background-color: #e8f4f8;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            border-radius: 4px;
+        }
+
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #c7254e;
+        }
+
+        .code-block {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .example-box {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            border: 2px solid #ecf0f1;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* ============================================
+           1. CSS GRID EXAMPLES
+           ============================================ */
+
+        .grid-example {
+            display: grid;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        /* Grid 2 kolom */
+        .grid-2-col {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        /* Grid 3 kolom */
+        .grid-3-col {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+
+        /* Grid 4 kolom */
+        .grid-4-col {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        /* Grid dengan template area */
+        .grid-template {
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-areas:
+                "header header header"
+                "sidebar main main"
+                "footer footer footer";
+        }
+
+        .grid-item {
+            background-color: #3498db;
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .grid-item.alternate {
+            background-color: #2ecc71;
+        }
+
+        .grid-item.header {
+            grid-area: header;
+            background-color: #34495e;
+        }
+
+        .grid-item.sidebar {
+            grid-area: sidebar;
+            background-color: #9b59b6;
+        }
+
+        .grid-item.main {
+            grid-area: main;
+            background-color: #3498db;
+        }
+
+        .grid-item.footer {
+            grid-area: footer;
+            background-color: #34495e;
+        }
+
+        /* ============================================
+           2. LINEAR GRADIENT EXAMPLES
+           ============================================ */
+
+        .gradient-box {
+            padding: 80px;
+            border-radius: 10px;
+            color: white;
+            text-align: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 150px;
+        }
+
+        /* Gradient sederhana 2 warna */
+        .gradient-simple {
+            background: linear-gradient(to right, #667eea, #764ba2);
+        }
+
+        /* Gradient dengan sudut */
+        .gradient-angle {
+            background: linear-gradient(45deg, #f093fb, #f5576c);
+        }
+
+        /* Gradient dengan 3 warna */
+        .gradient-multi {
+            background: linear-gradient(to bottom, #667eea, #764ba2, #f093fb);
+        }
+
+        /* Gradient dengan stop position */
+        .gradient-stops {
+            background: linear-gradient(90deg,
+                    #667eea 0%,
+                    #667eea 25%,
+                    #764ba2 50%,
+                    #f093fb 75%,
+                    #f5576c 100%);
+        }
+
+        /* Gradient radial */
+        .gradient-radial {
+            background: radial-gradient(circle, #667eea, #764ba2);
+        }
+
+        /* ============================================
+           3. TRANSFORM - TranslateY & Hover Effects
+           ============================================ */
+
+        .hover-box {
+            background-color: #3498db;
+            color: white;
+            padding: 40px;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        /* TranslateY - berdiri ke atas/bawah */
+        .hover-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            background-color: #2980b9;
+        }
+
+        /* Contoh lain - scale */
+        .transform-box-2 {
+            background-color: #2ecc71;
+            padding: 40px;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .transform-box-2:hover {
+            transform: scale(1.1);
+        }
+
+        /* Contoh lain - rotate */
+        .transform-box-3 {
+            background-color: #e74c3c;
+            padding: 40px;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .transform-box-3:hover {
+            transform: rotate(5deg);
+        }
+
+        /* Contoh kombinasi */
+        .transform-box-4 {
+            background-color: #f39c12;
+            padding: 40px;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .transform-box-4:hover {
+            transform: translateY(-10px) scale(1.05) rotate(2deg);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        /* ============================================
+           4. CSS SELECTORS - nth-child & variations
+           ============================================ */
+
+        .selector-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .selector-table thead {
+            background-color: #34495e;
+            color: white;
+        }
+
+        .selector-table th,
+        .selector-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        /* nth-child(odd) - baris ganjil */
+        .selector-table tbody tr:nth-child(odd) {
+            background-color: #f5f5f5;
+        }
+
+        /* nth-child(even) - baris genap */
+        .selector-table tbody tr:nth-child(even) {
+            background-color: white;
+        }
+
+        /* Hover effect pada baris */
+        .selector-table tbody tr:hover {
+            background-color: #e8f4f8;
+        }
+
+        /* Highlight baris tertentu dengan nth-child(n) */
+        .selector-table tbody tr:nth-child(3n) {
+            border-left: 4px solid #3498db;
+        }
+
+        /* Selector demo list */
+        .selector-list {
+            list-style: none;
+        }
+
+        .selector-list li {
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            background-color: white;
+            border-left: 4px solid #3498db;
+            border-radius: 4px;
+        }
+
+        /* First child */
+        .selector-list li:first-child {
+            background-color: #e8f8f5;
+            border-left-color: #2ecc71;
+        }
+
+        /* Last child */
+        .selector-list li:last-child {
+            background-color: #fadbd8;
+            border-left-color: #e74c3c;
+        }
+
+        /* Nth child */
+        .selector-list li:nth-child(2) {
+            background-color: #fef5e7;
+            border-left-color: #f39c12;
+        }
+
+        /* Nth of type */
+        .selector-list li:nth-of-type(3) {
+            background-color: #f4ecf7;
+            border-left-color: #9b59b6;
+        }
+
+        /* ============================================
+           5. KOMBINASI - REAL WORLD EXAMPLE
+           ============================================ */
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-image {
+            height: 200px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-content h3 {
+            margin-bottom: 10px;
+        }
+
+        .card-content p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+
+        @media (max-width: 768px) {
+
+            .grid-2-col,
+            .grid-template {
+                grid-template-columns: 1fr;
+            }
+
+            .grid-template {
+                grid-template-areas:
+                    "header"
+                    "sidebar"
+                    "main"
+                    "footer";
+            }
+
+            .grid-3-col {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .grid-4-col {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .gradient-box {
+                padding: 40px 20px;
+                font-size: 14px;
+            }
+        }
+
+        .breadcrumb {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 12px;
+            color: #999;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: #3498db;
+            text-decoration: none;
+            margin-bottom: 20px;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="back-link">← Kembali ke Landing Page: <a href="index.html">index.html</a></div>
+
+        <h1>🎓 Belajar CSS Concepts</h1>
+
+        <!-- ============================================
+             1. CSS GRID
+             ============================================ -->
+        <h2>1️⃣ CSS GRID - Layout 2 Dimensi</h2>
+
+        <div class="example-box">
+            <h3>Pengertian CSS Grid</h3>
+            <p><code>CSS Grid</code> adalah sistem layout 2 dimensi yang membagi website menjadi kolom dan baris.
+                Berbeda dengan Flexbox yang hanya 1 dimensi, Grid bisa mengatur baris DAN kolom sekaligus.</p>
+
+            <div class="note">
+                <strong>Kapan Pakai Grid?</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>Layout dashboard dengan banyak komponen</li>
+                    <li>Gallery foto dengan baris & kolom</li>
+                    <li>Layout website kompleks</li>
+                    <li>Kalender atau data table yang responsif</li>
+                </ul>
+            </div>
+
+            <h3>Contoh 1: Grid 2 Kolom</h3>
+            <div class="code-block">
+                grid-template-columns: 1fr 1fr;
+            </div>
+            <p><code>1fr</code> = 1 fraction (bagian). <code>1fr 1fr</code> = 2 kolom dengan lebar sama besar</p>
+            <div class="grid-example grid-2-col">
+                <div class="grid-item">Item 1</div>
+                <div class="grid-item alternate">Item 2</div>
+            </div>
+
+            <h3>Contoh 2: Grid 3 Kolom</h3>
+            <div class="code-block">
+                grid-template-columns: 1fr 1fr 1fr;
+                /* atau shorthand: */
+                grid-template-columns: repeat(3, 1fr);
+            </div>
+            <div class="grid-example grid-3-col">
+                <div class="grid-item">Item 1</div>
+                <div class="grid-item alternate">Item 2</div>
+                <div class="grid-item">Item 3</div>
+            </div>
+
+            <h3>Contoh 3: Grid 4 Kolom dengan repeat()</h3>
+            <div class="code-block">
+                grid-template-columns: repeat(4, 1fr);
+                /* repeat(berapa kali, ukuran) */
+            </div>
+            <div class="grid-example grid-4-col">
+                <div class="grid-item">Item 1</div>
+                <div class="grid-item alternate">Item 2</div>
+                <div class="grid-item">Item 3</div>
+                <div class="grid-item alternate">Item 4</div>
+            </div>
+
+            <h3>Contoh 4: Grid dengan Template Areas (Advanced)</h3>
+            <div class="code-block">
+                grid-template-columns: repeat(3, 1fr);
+                grid-template-areas:
+                "header header header"
+                "sidebar main main"
+                "footer footer footer";
+
+                .grid-item.header { grid-area: header; }
+                .grid-item.sidebar { grid-area: sidebar; }
+                .grid-item.main { grid-area: main; }
+                .grid-item.footer { grid-area: footer; }
+            </div>
+            <div class="grid-example grid-template">
+                <div class="grid-item header">HEADER</div>
+                <div class="grid-item sidebar">SIDEBAR</div>
+                <div class="grid-item main">MAIN CONTENT</div>
+                <div class="grid-item footer">FOOTER</div>
+            </div>
+
+            <h3>Gap (Jarak antar item)</h3>
+            <div class="code-block">
+                gap: 15px; /* Jarak 15px antar item */
+            </div>
+            <p>Membuat jarak otomatis antara semua item dalam grid.</p>
+        </div>
+
+        <!-- ============================================
+             2. LINEAR GRADIENT
+             ============================================ -->
+        <h2>2️⃣ LINEAR GRADIENT - Warna Gradual</h2>
+
+        <div class="example-box">
+            <h3>Pengertian Linear Gradient</h3>
+            <p><code>linear-gradient</code> adalah fungsi CSS untuk membuat warna yang berubah secara gradual dari satu
+                warna ke warna lain. Hasilnya lebih menarik daripada warna solid!</p>
+
+            <h3>Contoh 1: Gradient Sederhana (Kanan)</h3>
+            <div class="code-block">
+                background: linear-gradient(to right, #667eea, #764ba2);
+            </div>
+            <div class="gradient-box gradient-simple">to right: Biru → Ungu</div>
+
+            <h3>Contoh 2: Gradient dengan Sudut 45 Derajat</h3>
+            <div class="code-block">
+                background: linear-gradient(45deg, #f093fb, #f5576c);
+            </div>
+            <div class="gradient-box gradient-angle">45deg: Rosa → Merah</div>
+
+            <h3>Contoh 3: Gradient dengan 3 Warna</h3>
+            <div class="code-block">
+                background: linear-gradient(to bottom, #667eea, #764ba2, #f093fb);
+            </div>
+            <div class="gradient-box gradient-multi">to bottom: 3 Warna</div>
+
+            <h3>Contoh 4: Gradient dengan Posisi Stop</h3>
+            <div class="code-block">
+                background: linear-gradient(
+                90deg,
+                #667eea 0%,
+                #667eea 25%,
+                #764ba2 50%,
+                #f093fb 75%,
+                #f5576c 100%
+                );
+            </div>
+            <p>Bisa mengontrol di mana warna berubah dengan persentase atau px</p>
+            <div class="gradient-box gradient-stops">Banyak Stop Point</div>
+
+            <h3>Contoh 5: Radial Gradient (dari tengah)</h3>
+            <div class="code-block">
+                background: radial-gradient(circle, #667eea, #764ba2);
+            </div>
+            <div class="gradient-box gradient-radial">Radial dari Tengah</div>
+
+            <div class="note">
+                <strong>Syntax Umum:</strong><br>
+                <code>linear-gradient(arah, warna1, warna2)</code>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li><strong>Arah:</strong> to right, to bottom, 45deg, dll</li>
+                    <li><strong>Warna:</strong> #hexcode, rgb(), atau color names</li>
+                    <li><strong>Stop:</strong> Opsional - untuk kontrol posisi warna</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ============================================
+             3. TRANSFORM - TranslateY & Lainnya
+             ============================================ -->
+        <h2>3️⃣ TRANSFORM - Pergerakan & Perubahan Bentuk</h2>
+
+        <div class="example-box">
+            <h3>Pengertian Transform</h3>
+            <p><code>Transform</code> mengubah posisi, ukuran, atau rotasi elemen tanpa mempengaruhi layout website.
+                Sering digabung dengan <code>transition</code> untuk efek smooth.</p>
+
+            <h3>Contoh 1: translateY (Naik/Turun)</h3>
+            <div class="code-block">
+                transform: translateY(-10px);
+                /* translateY(positif) = turun, translateY(negatif) = naik */
+            </div>
+            <p>Hover ke box di bawah untuk melihat efeknya:</p>
+            <div class="hover-box">Hover ke saya → Naik! 👆</div>
+
+            <h3>Contoh 2: scale (Membesar/Mengecil)</h3>
+            <div class="code-block">
+                transform: scale(1.1);
+                /* 1.1 = 110% dari ukuran awal */
+            </div>
+            <div class="transform-box-2">Hover → Membesar! 🔍</div>
+
+            <h3>Contoh 3: rotate (Memutar)</h3>
+            <div class="code-block">
+                transform: rotate(5deg);
+                /* Positif = searah jarum jam */
+            </div>
+            <div class="transform-box-3">Hover → Berputar! 🔄</div>
+
+            <h3>Contoh 4: Kombinasi Multiple Transform</h3>
+            <div class="code-block">
+                transform: translateY(-10px) scale(1.05) rotate(2deg);
+            </div>
+            <p>Bisa menggabung beberapa transform sekaligus!</p>
+            <div class="transform-box-4">Hover → Semua Transform! 🎯</div>
+
+            <div class="note">
+                <strong>Transform Values:</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li><code>translateX(px)</code> - geser kanan/kiri</li>
+                    <li><code>translateY(px)</code> - geser atas/bawah</li>
+                    <li><code>scale(angka)</code> - ubah ukuran (1 = normal)</li>
+                    <li><code>rotate(deg)</code> - putar (positif = searah jarum jam)</li>
+                    <li><code>skew(deg)</code> - miringkan</li>
+                </ul>
+            </div>
+
+            <h3>Penting: Tambahkan Transition!</h3>
+            <div class="code-block">
+                transition: all 0.3s ease;
+                /* Buat perubahan smooth daripada instant */
+            </div>
+        </div>
+
+        <!-- ============================================
+             4. CSS SELECTORS - nth-child & variations
+             ============================================ -->
+        <h2>4️⃣ CSS SELECTORS - nth-child & nth-of-type</h2>
+
+        <div class="example-box">
+            <h3>Pengertian Selector</h3>
+            <p>Selector adalah cara memilih elemen HTML tertentu untuk diberikan CSS. <code>:nth-child()</code> memilih
+                elemen berdasarkan posisinya di antara siblings.</p>
+
+            <h3>Contoh 1: nth-child(odd) - Baris Ganjil</h3>
+            <div class="code-block">
+                tr:nth-child(odd) {
+                background-color: #f5f5f5;
+                }
+                /* odd = 1, 3, 5, 7 (baris ganjil) */
+            </div>
+            <p>Lihat tabel di bawah, baris nomor 1, 3, 5 memiliki warna abu-abu:</p>
+            <table class="selector-table">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Baris Ganjil</td>
+                        <td>Background Abu-abu</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Baris Genap</td>
+                        <td>Background Putih</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Baris Ganjil</td>
+                        <td>Background Abu-abu</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Baris Genap</td>
+                        <td>Background Putih</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Baris Ganjil</td>
+                        <td>Background Abu-abu</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Contoh 2: nth-child(even) - Baris Genap</h3>
+            <div class="code-block">
+                tr:nth-child(even) {
+                background-color: white;
+                }
+                /* even = 2, 4, 6, 8 (baris genap) */
+            </div>
+
+            <h3>Contoh 3: nth-child(3n) - Setiap 3 Elemen</h3>
+            <div class="code-block">
+                tr:nth-child(3n) {
+                border-left: 4px solid blue;
+                }
+                /* 3n = 3, 6, 9, 12 (setiap 3 elemen) */
+            </div>
+            <p>Lihat tabel di atas, baris 3 memiliki border biru di kiri</p>
+
+            <h3>Contoh 4: first-child, last-child, nth-child</h3>
+            <div class="code-block">
+                li:first-child { /* Item pertama */ }
+                li:last-child { /* Item terakhir */ }
+                li:nth-child(2) { /* Item nomor 2 */ }
+                li:nth-of-type(3) { /* Item ketiga dari type yang sama */ }
+            </div>
+            <ul class="selector-list">
+                <li>✅ Item Pertama (first-child) - Hijau</li>
+                <li>🟨 Item Kedua (nth-child(2)) - Kuning</li>
+                <li>🟪 Item Ketiga (nth-of-type(3)) - Ungu</li>
+                <li>Item Keempat</li>
+                <li>🔴 Item Terakhir (last-child) - Merah</li>
+            </ul>
+
+            <div class="note">
+                <strong>Selector Cheat Sheet:</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li><code>:first-child</code> - Item pertama</li>
+                    <li><code>:last-child</code> - Item terakhir</li>
+                    <li><code>:nth-child(n)</code> - Item ke-n</li>
+                    <li><code>:nth-child(odd)</code> - Item ganjil (1,3,5...)</li>
+                    <li><code>:nth-child(even)</code> - Item genap (2,4,6...)</li>
+                    <li><code>:nth-child(3n)</code> - Setiap 3 item (3,6,9...)</li>
+                    <li><code>:nth-child(2n+1)</code> - Item ganjil (formula)</li>
+                    <li><code>:nth-of-type(n)</code> - Item ke-n dari tag yang sama</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ============================================
+             5. REAL WORLD - Kombinasi Semua
+             ============================================ -->
+        <h2>5️⃣ REAL WORLD - Kombinasi Semua Konsep</h2>
+
+        <div class="example-box">
+            <h3>Membuat Card Grid (Seperti Landing Page)</h3>
+            <div class="code-block">
+                .card-grid {
+                display: grid; /* Gunakan Grid */
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 20px;
+                }
+
+                .card {
+                background: white;
+                transition: all 0.3s ease;
+                }
+
+                .card:hover {
+                transform: translateY(-10px); /* TranslateY saat hover */
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+                }
+
+                .card-image {
+                height: 200px;
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                }
+            </div>
+
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-image">Kursus 1</div>
+                    <div class="card-content">
+                        <h3>HTML Dasar</h3>
+                        <p>Pelajari struktur HTML dari nol. Hover ke card untuk melihat efek translateY!</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-image">Kursus 2</div>
+                    <div class="card-content">
+                        <h3>CSS Styling</h3>
+                        <p>Master CSS untuk desain yang indah. Grid membuat layout responsive otomatis!</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-image">Kursus 3</div>
+                    <div class="card-content">
+                        <h3>JavaScript</h3>
+                        <p>Buat website interaktif. Gradient membuat card terlihat lebih menarik!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             SUMMARY
+             ============================================ -->
+        <h2>📋 Summary - Kapan Pakai Apa?</h2>
+
+        <div class="example-box">
+            <table class="selector-table">
+                <thead>
+                    <tr>
+                        <th>Konsep</th>
+                        <th>Gunakan Ketika...</th>
+                        <th>Contoh</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>CSS Grid</strong></td>
+                        <td>Buat layout kompleks dengan baris & kolom</td>
+                        <td>Dashboard, gallery, portfolio</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Linear Gradient</strong></td>
+                        <td>Ingin background dengan warna gradual</td>
+                        <td>Hero section, card background</td>
+                    </tr>
+                    <tr>
+                        <td><strong>TranslateY</strong></td>
+                        <td>Ingin elemen bergerak atas/bawah</td>
+                        <td>Hover effect pada card, button</td>
+                    </tr>
+                    <tr>
+                        <td><strong>nth-child(odd)</strong></td>
+                        <td>Alternate warna di tabel atau list</td>
+                        <td>Zebra striping di tabel</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="note" style="margin-top: 20px;">
+                <strong>💡 Pro Tips:</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>Selalu tambah <code>transition</code> untuk transform agar smooth</li>
+                    <li>Gunakan <code>gap</code> di grid daripada margin untuk konsistensi</li>
+                    <li>Gradient bisa pakai di background image, tidak hanya solid color</li>
+                    <li>Kombinasikan multiple selector untuk presisi lebih</li>
+                    <li>Test responsive design di browser DevTools (F12)</li>
+                </ul>
+            </div>
+        </div>
+
+        <br><br>
+    </div>
+</body>
+
+</html>
