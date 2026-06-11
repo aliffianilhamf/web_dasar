@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modul Interaktif: CSS Border & Border Radius</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --secondary: #10b981;
+            --bg-color: #f8fafc;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --sidebar-width: 280px;
+
+            /* Box Model Colors */
+            --border-box-color: #fde047;
+            --content-color: #bfdbfe;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            color: var(--text-main);
+            background-color: var(--bg-color);
+            line-height: 1.6;
+            display: flex;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: var(--sidebar-width);
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: white;
+            border-right: 1px solid var(--border-color);
+            padding: 20px 0;
+            overflow-y: auto;
+            z-index: 100;
+        }
+
+        .sidebar h2 {
+            padding: 0 20px;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar li a {
+            display: block;
+            padding: 8px 20px;
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: background 0.2s;
+        }
+
+        .sidebar li a:hover {
+            background: #f1f5f9;
+            color: var(--primary);
+        }
+
+        /* Main Content */
+        .content {
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            width: calc(100% - var(--sidebar-width));
+            max-width: 1000px;
+        }
+
+        section {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+        }
+
+        h1,
+        h2,
+        h3 {
+            margin-bottom: 15px;
+            color: #0f172a;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-top: 30px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 5px;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            margin-top: 20px;
+        }
+
+        p,
+        ul,
+        ol {
+            margin-bottom: 15px;
+        }
+
+        ul,
+        ol {
+            margin-left: 20px;
+        }
+
+        /* Code Blocks & Syntax Highlighting */
+        .code-container {
+            position: relative;
+            background: #1e1e1e;
+            border-radius: 8px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: background 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        pre {
+            padding: 15px;
+            overflow-x: auto;
+            color: #d4d4d4;
+            font-family: 'Consolas', monospace;
+            font-size: 0.95rem;
+        }
+
+        .token.property {
+            color: #9cdcfe;
+        }
+
+        .token.value {
+            color: #ce9178;
+        }
+
+        .token.selector {
+            color: #d7ba7d;
+        }
+
+        /* Playgrounds */
+        .playground {
+            background: #f1f5f9;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin: 20px 0;
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .control-group input,
+        .control-group select {
+            margin-top: 5px;
+            padding: 5px;
+        }
+
+        .preview-area {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 200px;
+            background: white;
+            border: 1px dashed #cbd5e1;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .preview-box {
+            background: var(--content-color);
+            color: #1e293b;
+            text-align: center;
+            padding: 20px;
+            transition: all 0.2s;
+            font-weight: 600;
+        }
+
+        /* Quiz */
+        .quiz-container {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .options label {
+            display: block;
+            padding: 8px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .options label:hover {
+            background: #e2e8f0;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.2s;
+        }
+
+        .btn:hover {
+            background: var(--primary-hover);
+        }
+
+        .result-msg {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .correct {
+            color: var(--secondary);
+        }
+
+        .wrong {
+            color: #ef4444;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        th,
+        td {
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #f1f5f9;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+
+            .content {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .controls {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="sidebar">
+        <h2>Daftar Isi</h2>
+        <ul>
+            <li><a href="#pendahuluan">1. Pendahuluan</a></li>
+            <li><a href="#properti-dasar">2. Properti Dasar Border</a></li>
+            <li><a href="#border-sisi">3. Border Per Sisi</a></li>
+            <li><a href="#shorthand-border">4. Shorthand Border</a></li>
+            <li><a href="#border-radius">5. Mengenal Border Radius</a></li>
+            <li><a href="#lingkaran-pil">6. Lingkaran & Pil</a></li>
+            <li><a href="#best-practices">7. Best Practices & Kesalahan</a></li>
+            <li><a href="#cheatsheet">8. Cheat Sheet</a></li>
+            <li><a href="#playground-gabungan">9. Playground Gabungan</a></li>
+            <li><a href="#kuis">10. Kuis Interaktif</a></li>
+            <li><a href="#latihan-praktik">11. Latihan Praktik</a></li>
+            <li><a href="#ringkasan">12. Ringkasan Akhir</a></li>
+        </ul>
+    </nav>
+
+    <main class="content">
+        <!-- 1. Pendahuluan -->
+        <section id="pendahuluan">
+            <h1>1. Pendahuluan</h1>
+            <p>Selamat datang di modul tentang <strong>CSS Border dan Border Radius</strong>. Border adalah garis batas
+                yang membungkus konten dan padding. Memahami cara memanipulasi ketebalan, gaya, warna, serta
+                kelengkungan sudut (radius) akan membuat desain web Anda terlihat jauh lebih modern dan profesional.</p>
+        </section>
+
+        <!-- 2. Properti Dasar -->
+        <section id="properti-dasar">
+            <h2>2. Properti Dasar Border</h2>
+            <p>Sebuah border memiliki tiga properti utama yang wajib Anda ketahui:</p>
+            <ul>
+                <li><strong><code>border-width</code></strong>: Mengontrol ketebalan garis (misal: 2px, 5px, thin,
+                    thick).</li>
+                <li><strong><code>border-style</code></strong>: Menentukan gaya garis. Tanpa properti ini, border
+                    <strong>tidak akan</strong> muncul.</li>
+                <li><strong><code>border-color</code></strong>: Menentukan warna garis batas.</li>
+            </ul>
+
+            <h3>Nilai border-style yang sering digunakan</h3>
+            <p><code>solid</code> (garis penuh), <code>dashed</code> (putus-putus panjang), <code>dotted</code>
+                (titik-titik), <code>double</code> (garis ganda), <code>none</code> (menghilangkan border).</p>
+
+            <h3>Interactive Playground: Properti Border Dasar</h3>
+            <div class="playground">
+                <div class="controls">
+                    <div class="control-group">
+                        <label>Border Width: <span id="bw-val">5</span>px</label>
+                        <input type="range" id="bor-width" min="1" max="30" value="5">
+                    </div>
+                    <div class="control-group">
+                        <label>Border Style:</label>
+                        <select id="bor-style">
+                            <option value="solid">solid</option>
+                            <option value="dashed">dashed</option>
+                            <option value="dotted">dotted</option>
+                            <option value="double">double</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label>Border Color:</label>
+                        <input type="color" id="bor-color" value="#ef4444">
+                    </div>
+                </div>
+                <div class="preview-area">
+                    <div class="preview-box" id="bor-preview"
+                        style="border-width: 5px; border-style: solid; border-color: #ef4444;">
+                        Konten dengan Border
+                    </div>
+                </div>
+                <br>
+                <code>CSS: border: <span id="bor-code">5px solid #ef4444</span>;</code>
+            </div>
+        </section>
+
+        <!-- 3. Border Sisi & 4. Shorthand -->
+        <section id="border-sisi">
+            <h2>3. Border Per Sisi</h2>
+            <p>Anda bisa menargetkan hanya sisi tertentu dari elemen. Hal ini berguna misalnya untuk membuat garis bawah
+                (underline) tebal pada menu navigasi atau *quote*.</p>
+            <ul>
+                <li><code>border-top</code></li>
+                <li><code>border-right</code></li>
+                <li><code>border-bottom</code></li>
+                <li><code>border-left</code></li>
+            </ul>
+
+            <h2 id="shorthand-border">4. Shorthand Border</h2>
+            <p>Penulisan <code>border-width</code>, <code>border-style</code>, dan <code>border-color</code> terpisah
+                terlalu panjang. CSS menyediakan <strong>Shorthand</strong> (singkatan).</p>
+            <div class="code-container">
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><span class="token selector">.box</span> {
+    <span class="token property">border</span>: <span class="token value">2px solid #3b82f6</span>;  /* Shorthand seluruh sisi */
+    <span class="token property">border-bottom</span>: <span class="token value">5px dashed red</span>; /* Menimpa hanya bagian bawah */
+}</pre>
+            </div>
+
+            <h3>Contoh Implementasi HTML & CSS</h3>
+            <div class="code-container">
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><span class="token selector">&lt;style&gt;</span>
+  <span class="token selector">.quote-box</span> {
+    <span class="token property">background-color</span>: <span class="token value">#f1f5f9</span>;
+    <span class="token property">padding</span>: <span class="token value">20px</span>;
+    <span class="token property">border-left</span>: <span class="token value">8px solid #2563eb</span>; /* Garis tebal di kiri */
+  }
+<span class="token selector">&lt;/style&gt;</span>
+
+<span class="token selector">&lt;div class="quote-box"&gt;</span>
+  "Belajar CSS membuat kita mampu menghias web..."
+<span class="token selector">&lt;/div&gt;</span></pre>
+            </div>
+        </section>
+
+        <!-- 5. Border Radius -->
+        <section id="border-radius">
+            <h2>5. Mengenal Border Radius</h2>
+            <p>Properti <code>border-radius</code> melengkungkan sudut dari *border*. Namun yang perlu dicatat, meskipun
+                Anda tidak mengatur properti `border`, properti ini tetap akan melengkungkan
+                <strong>background</strong>-nya.</p>
+
+            <h3>Penulisan Nilai</h3>
+            <ul>
+                <li><strong>Pixel (px):</strong> Memberikan lengkungan dengan radius statis (misal 5px, 10px).</li>
+                <li><strong>Persentase (%):</strong> Melengkungkan radius berdasarkan ukuran elemen tersebut. 50% akan
+                    membuat lingkaran jika bentuk aslinya persegi (width == height).</li>
+            </ul>
+
+            <h3>Shorthand Sudut (Searah Jarum Jam)</h3>
+            <p>Dimulai dari Top-Left, Top-Right, Bottom-Right, Bottom-Left.</p>
+            <div class="code-container">
+                <pre><span class="token selector">.card</span> {
+    <span class="token property">border-radius</span>: <span class="token value">10px 20px 30px 40px</span>;
+}</pre>
+            </div>
+
+            <h2 id="lingkaran-pil">6. Membuat Bentuk Lingkaran & Pil (Pill-shape)</h2>
+            <p>Ada dua trik radius yang sangat laris di dunia desain UI modern:</p>
+            <table style="margin-top:10px;">
+                <tr>
+                    <th>Bentuk</th>
+                    <th>Kode CSS Utama</th>
+                    <th>Fungsi / Kegunaan</th>
+                </tr>
+                <tr>
+                    <td><strong>Lingkaran Penuh</strong></td>
+                    <td><code>width: 100px;<br>height: 100px;<br>border-radius: 50%;</code></td>
+                    <td>Foto profil (Avatar), Tombol floating action</td>
+                </tr>
+                <tr>
+                    <td><strong>Bentuk Pil (Rounded)</strong></td>
+                    <td><code>padding: 10px 30px;<br>border-radius: 9999px;</code></td>
+                    <td>Tombol (Button), Badge status, Tag kategori</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- 7. Best Practices & Kesalahan -->
+        <section id="best-practices">
+            <h2>7. Best Practices & Kesalahan Umum</h2>
+            <h3>Best Practices</h3>
+            <ul>
+                <li>Gunakan <code>border-radius: 4px</code> atau <code>8px</code> untuk memberikan kesan ramah tapi
+                    tetap profesional ala kartu / *card* UI modern.</li>
+                <li>Hindari warna border yang terlalu mencolok (hitam absolut pekat). Gunakan warna abu-abu lembut
+                    (contoh `#e2e8f0` di Tailwind) untuk garis batas halus pembatas konten.</li>
+            </ul>
+
+            <h3>Kesalahan Umum</h3>
+            <ul>
+                <li><strong>Lupa menulis border-style:</strong> Menulis <code>border: 5px red;</code> tidak akan muncul
+                    karena style tidak disebutkan. Harus <code>5px solid red</code>.</li>
+                <li><strong>Border menggeser layout:</strong> Default-nya border menambah ukuran elemen. Ingat
+                    <code>box-sizing: border-box;</code> agar padding dan border dihitung dalam width.</li>
+            </ul>
+        </section>
+
+        <!-- 9. Playground Gabungan -->
+        <section id="playground-gabungan">
+            <h2>9. Playground Gabungan (Radius)</h2>
+            <p>Atur slider di bawah ini pada elemen persegi dengan lebar dan tinggi yang sama (square).</p>
+            <div class="playground">
+                <div class="controls">
+                    <div class="control-group">
+                        <label>Border Radius (px): <span id="rad-px-val">0</span>px</label>
+                        <input type="range" id="rad-px" min="0" max="100" value="0">
+                    </div>
+                    <div class="control-group">
+                        <label>Border Radius (%): <span id="rad-pc-val">0</span>%</label>
+                        <input type="range" id="rad-pc" min="0" max="50" value="0">
+                    </div>
+                </div>
+                <div class="preview-area" style="background:#e4e4e7;">
+                    <!-- Square Box -->
+                    <div id="rad-preview"
+                        style="width:150px; height:150px; background:var(--primary); display:flex; align-items:center; justify-content:center; color:white; font-weight:bold; transition: 0.3s; border: 4px solid var(--primary-hover);">
+                        Coba Radius
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 10. Kuis Interaktif -->
+        <section id="kuis">
+            <h2>10. Kuis Interaktif</h2>
+            <div class="quiz-container" id="quiz-block"></div>
+        </section>
+
+        <!-- 11. Latihan Praktik -->
+        <section id="latihan-praktik">
+            <h2>11. Latihan Praktik: Membuat Tombol Pill & Avatar Profile</h2>
+            <p>Gabungkan pemahaman Anda. Buat UI mini yang mirip tombol dan gambar profil melingkar dengan kode berikut:
+            </p>
+            <div class="code-container">
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><span class="token selector">&lt;style&gt;</span>
+  <span class="token selector">.avatar</span> {
+    <span class="token property">width</span>: <span class="token value">80px</span>;
+    <span class="token property">height</span>: <span class="token value">80px</span>;
+    <span class="token property">background-color</span>: <span class="token value">#10b981</span>;
+    <span class="token property">border-radius</span>: <span class="token value">50%</span>; /* Membuat lingkaran sempurna */
+    <span class="token property">border</span>: <span class="token value">4px solid white</span>;
+    <span class="token property">box-shadow</span>: <span class="token value">0 2px 4px rgba(0,0,0,0.2)</span>;
+    <span class="token property">margin-bottom</span>: <span class="token value">20px</span>;
+  }
+  
+  <span class="token selector">.btn-pill</span> {
+    <span class="token property">background-color</span>: <span class="token value">#3b82f6</span>;
+    <span class="token property">color</span>: <span class="token value">white</span>;
+    <span class="token property">padding</span>: <span class="token value">12px 30px</span>;
+    <span class="token property">border</span>: <span class="token value">none</span>;
+    <span class="token property">border-radius</span>: <span class="token value">9999px</span>; /* Radius pil maksimal */
+    <span class="token property">cursor</span>: <span class="token value">pointer</span>;
+    <span class="token property">font-weight</span>: <span class="token value">bold</span>;
+  }
+<span class="token selector">&lt;/style&gt;</span>
+
+<span class="token selector">&lt;div class="avatar"&gt;&lt;/div&gt;</span>
+<span class="token selector">&lt;button class="btn-pill"&gt;</span>Follow<span class="token selector">&lt;/button&gt;</span></pre>
+            </div>
+            <p>Silakan simpan cuplikan kode di atas sebagai file `.html` lalu buka di peramban. Tombol
+                <code>btn-pill</code> akan memiliki lekukan kapsul sempurna terlepas dari ukuran padding yang Anda
+                berikan.</p>
+        </section>
+
+        <!-- 12. Ringkasan -->
+        <section id="ringkasan">
+            <h2>12. Ringkasan Akhir</h2>
+            <ul>
+                <li>`border` membutuhkan kombinasi `width`, `style`, dan `color`, sering ditulis dalam *shorthand*.</li>
+                <li>`border-radius` memberikan lengkungan sudut dan sangat berguna untuk memperhalus layout modern.</li>
+                <li>Gunakan `50%` pada elemen kotak presisi untuk menghasilkan avatar lingkaran.</li>
+                <li>Gunakan `border-radius: 9999px` pada rectangle dengan width memanjang (seperti *button*) agar
+                    menjadi bentuk kapsul/pil.</li>
+            </ul>
+        </section>
+
+        <footer style="text-align: center; margin-top: 50px; color: var(--text-muted); font-size: 0.9rem;">
+            Materi CSS Border dan Border Radius - Complete Interactive Learning Module
+        </footer>
+    </main>
+
+    <script>
+        // Copy Code Function
+        function copyCode(btn) {
+            const code = btn.nextElementSibling.innerText;
+            navigator.clipboard.writeText(code);
+            btn.innerText = 'Copied!';
+            setTimeout(() => btn.innerText = 'Copy', 2000);
+        }
+
+        // Basic Border Playground
+        const bW = document.getElementById('bor-width');
+        const bS = document.getElementById('bor-style');
+        const bC = document.getElementById('bor-color');
+        const bPreview = document.getElementById('bor-preview');
+        const bCode = document.getElementById('bor-code');
+
+        function updateBorder() {
+            document.getElementById('bw-val').innerText = bW.value;
+            bPreview.style.borderWidth = bW.value + 'px';
+            bPreview.style.borderStyle = bS.value;
+            bPreview.style.borderColor = bC.value;
+
+            bCode.innerText = `${bW.value}px ${bS.value} ${bC.value}`;
+        }
+        bW.addEventListener('input', updateBorder);
+        bS.addEventListener('change', updateBorder);
+        bC.addEventListener('input', updateBorder);
+
+        // Border Radius Playground
+        const rPx = document.getElementById('rad-px');
+        const rPc = document.getElementById('rad-pc');
+        const rPreview = document.getElementById('rad-preview');
+
+        rPx.addEventListener('input', (e) => {
+            document.getElementById('rad-px-val').innerText = e.target.value;
+            rPc.value = 0; // reset percentage
+            document.getElementById('rad-pc-val').innerText = 0;
+
+            rPreview.style.borderRadius = e.target.value + 'px';
+        });
+
+        rPc.addEventListener('input', (e) => {
+            document.getElementById('rad-pc-val').innerText = e.target.value;
+            rPx.value = 0; // reset px
+            document.getElementById('rad-px-val').innerText = 0;
+
+            rPreview.style.borderRadius = e.target.value + '%';
+        });
+
+        // Quiz Logic
+        const questions = [
+            {
+                q: "1. Manakah properti di bawah ini yang MUTLAK diperlukan agar border bisa tampil / terlihat?",
+                o: ["border-width", "border-color", "border-radius", "border-style"],
+                a: 3,
+                exp: "Tanpa menentukan `border-style` (seperti solid, dashed), border tidak akan pernah terlihat, meskipun diatur warna/ukurannya."
+            },
+            {
+                q: "2. Nilai border-radius apa yang secara konsisten membentuk elemen kotak bersisi sama panjang (Square) menjadi Lingkaran sempurna (Circle)?",
+                o: ["50px", "99px", "50%", "100%"],
+                a: 2,
+                exp: "`border-radius: 50%;` merujuk pada persentase ukuran, membulatkan masing-masing sudut tepat di titik tengah (jari-jari maksimal)."
+            },
+            {
+                q: "3. Cara penulisan shorthand: `border: 2px solid green;` berfungsi untuk...",
+                o: ["Menambah border hanya di atas dan bawah", "Menambah border garis putus-putus berwarna hijau", "Menambah border 2px solid di keempat sisi", "Semua salah"],
+                a: 2,
+                exp: "Itu adalah format shorthand untuk mengaplikasikan width = 2px, style = solid, color = green pada seluruh sisi (atas, kanan, bawah, kiri)."
+            }
+        ];
+
+        const quizBlock = document.getElementById('quiz-block');
+
+        questions.forEach((q, idx) => {
+            const div = document.createElement('div');
+            div.className = 'question';
+            div.innerHTML = `<p><strong>${q.q}</strong></p>
+                <div class="options" id="options-${idx}">
+                    ${q.o.map((opt, i) => `<label><input type="radio" name="q${idx}" value="${i}"> ${opt}</label>`).join('')}
+                </div>
+                <button class="btn" style="margin-top:10px" onclick="checkAnswer(${idx})">Periksa Jawaban</button>
+                <div id="res-${idx}" class="result-msg"></div>`;
+            quizBlock.appendChild(div);
+        });
+
+        function checkAnswer(idx) {
+            const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+            const resDiv = document.getElementById(`res-${idx}`);
+            if (!selected) {
+                resDiv.innerText = "Pilih jawaban terlebih dahulu!";
+                resDiv.className = "result-msg wrong";
+                return;
+            }
+            if (parseInt(selected.value) === questions[idx].a) {
+                resDiv.innerHTML = `Benar! ${questions[idx].exp}`;
+                resDiv.className = "result-msg correct";
+            } else {
+                resDiv.innerHTML = `Salah. ${questions[idx].exp}`;
+                resDiv.className = "result-msg wrong";
+            }
+        }
+    </script>
+</body>
+
+</html>

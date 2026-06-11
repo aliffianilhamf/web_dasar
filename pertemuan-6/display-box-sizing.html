@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modul Interaktif: CSS Display & Box-Sizing</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --secondary: #10b981;
+            --bg-color: #f8fafc;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --sidebar-width: 280px;
+
+            /* Box Model Colors */
+            --border-box-color: #fde047;
+            --padding-color: #bbf7d0;
+            --content-color: #bfdbfe;
+            --warning-color: #f59e0b;
+        }
+
+        * {
+            /* Kita sengaja tidak set box-sizing di sini untuk materi */
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            color: var(--text-main);
+            background-color: var(--bg-color);
+            line-height: 1.6;
+            display: flex;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: var(--sidebar-width);
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: white;
+            border-right: 1px solid var(--border-color);
+            padding: 20px 0;
+            overflow-y: auto;
+            z-index: 100;
+            box-sizing: border-box;
+            /* Untuk UI sidebar */
+        }
+
+        .sidebar h2 {
+            padding: 0 20px;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar li a {
+            display: block;
+            padding: 8px 20px;
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: background 0.2s;
+        }
+
+        .sidebar li a:hover {
+            background: #f1f5f9;
+            color: var(--primary);
+        }
+
+        /* Main Content */
+        .content {
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            width: calc(100% - var(--sidebar-width));
+            max-width: 1000px;
+            box-sizing: border-box;
+        }
+
+        section {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            box-sizing: border-box;
+        }
+
+        h1,
+        h2,
+        h3 {
+            margin-bottom: 15px;
+            color: #0f172a;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-top: 30px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 5px;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            margin-top: 20px;
+        }
+
+        p,
+        ul,
+        ol {
+            margin-bottom: 15px;
+        }
+
+        ul,
+        ol {
+            margin-left: 20px;
+        }
+
+        /* Code Blocks & Syntax Highlighting */
+        .code-container {
+            position: relative;
+            background: #1e1e1e;
+            border-radius: 8px;
+            margin: 15px 0;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: background 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        pre {
+            padding: 15px;
+            overflow-x: auto;
+            color: #d4d4d4;
+            font-family: 'Consolas', monospace;
+            font-size: 0.95rem;
+        }
+
+        .token.property {
+            color: #9cdcfe;
+        }
+
+        .token.value {
+            color: #ce9178;
+        }
+
+        .token.selector {
+            color: #d7ba7d;
+        }
+
+        .token.comment {
+            color: #6a9955;
+            font-style: italic;
+        }
+
+        /* Playgrounds */
+        .playground {
+            background: #f1f5f9;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin: 20px 0;
+            box-sizing: border-box;
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .control-group input,
+        .control-group select {
+            margin-top: 5px;
+            padding: 5px;
+        }
+
+        .preview-area {
+            background: white;
+            border: 1px dashed #cbd5e1;
+            padding: 20px;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        /* Specific to display playground */
+        .disp-item {
+            background: var(--primary);
+            color: white;
+            padding: 10px;
+            border: 2px solid var(--primary-hover);
+            margin: 5px;
+            font-weight: 600;
+            box-sizing: border-box;
+        }
+
+        .disp-target {
+            background: var(--warning-color);
+            border-color: #d97706;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            width: 150px;
+            height: 100px;
+            /* Kita tidak men-set display di sini, diatur via JS */
+        }
+
+        /* Specific to box-sizing playground */
+        .parent-box {
+            width: 300px;
+            border: 2px dashed #94a3b8;
+            background: #f8fafc;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .parent-box::before {
+            content: "Lebar Area: 300px";
+            position: absolute;
+            top: -25px;
+            left: 0;
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+
+        .target-box {
+            width: 100%;
+            /* Ingin menyesuaikan dengan parent yang 300px */
+            background: var(--content-color);
+            border: 0px solid var(--border-box-color);
+            padding: 0px;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        /* Quiz */
+        .quiz-container {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .options label {
+            display: block;
+            padding: 8px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .options label:hover {
+            background: #e2e8f0;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.2s;
+        }
+
+        .btn:hover {
+            background: var(--primary-hover);
+        }
+
+        .result-msg {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .correct {
+            color: var(--secondary);
+        }
+
+        .wrong {
+            color: #ef4444;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        th,
+        td {
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #f1f5f9;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+
+            .content {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .controls {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="sidebar">
+        <h2>Daftar Isi</h2>
+        <ul>
+            <li><a href="#pendahuluan">1. Pendahuluan</a></li>
+            <li><a href="#properti-display">2. Jenis-jenis Display CSS</a></li>
+            <li><a href="#playground-display">3. Interactive: Display</a></li>
+            <li><a href="#box-sizing">4. Masalah Box-Sizing</a></li>
+            <li><a href="#playground-boxsizing">5. Interactive: Box-Sizing</a></li>
+            <li><a href="#best-practices">6. Best Practices Web Modern</a></li>
+            <li><a href="#latihan-praktik">7. Latihan Praktik</a></li>
+            <li><a href="#kuis">8. Kuis Interaktif</a></li>
+            <li><a href="#ringkasan">9. Ringkasan Akhir</a></li>
+        </ul>
+    </nav>
+
+    <main class="content">
+        <!-- 1. Pendahuluan -->
+        <section id="pendahuluan">
+            <h1>1. Pendahuluan</h1>
+            <p>Setelah memahami Padding, Margin, dan Border (<strong>Box Model</strong>), sekarang kita masuk ke
+                bagaimana kotak-kotak tersebut saling menyusun diri di layar (<strong>Display</strong>) dan bagaimana
+                menghitung total ukuran kotak tersebut (<strong>Box-Sizing</strong>).</p>
+            <p>Materi ini adalah kunci untuk mencegah layout Anda "bocor" atau terpotong tanpa alasan yang jelas.</p>
+        </section>
+
+        <!-- 2. Display CSS -->
+        <section id="properti-display">
+            <h2>2. Jenis-jenis Properti Display</h2>
+            <p>Di HTML, setiap elemen secara *default* sudah memiliki nilai display. Contoh: <code>&lt;div&gt;</code>
+                adalah <code>block</code> dan <code>&lt;span&gt;</code> adalah <code>inline</code>. Kita bisa
+                memanipulasinya di CSS:</p>
+
+            <table style="font-size:0.9rem;">
+                <tr>
+                    <th>Display</th>
+                    <th>Karakteristik & Perilaku</th>
+                    <th>Elemen Default HTML</th>
+                </tr>
+                <tr>
+                    <td><strong>block</strong></td>
+                    <td>Memakan ukuran penuh secara mendatar (100% dari parent). Selalu memulai baris baru dari atas ke
+                        bawah. Nilai <code>width</code> dan <code>height</code> berpengaruh.</td>
+                    <td><code>&lt;div&gt;</code>, <code>&lt;p&gt;</code>, <code>&lt;h1&gt;</code>,
+                        <code>&lt;ul&gt;</code>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>inline</strong></td>
+                    <td>Hanya memakan lebar sebesar kontennya (seperti teks di dalam kalimat). Elemen tidak pindah baris
+                        walau bersebelahan. <strong>Perhatian:</strong> <code>width</code>, <code>height</code>, serta
+                        margin/padding vertikal <strong>tidak berlaku</strong>!</td>
+                    <td><code>&lt;span&gt;</code>, <code>&lt;a&gt;</code>, <code>&lt;strong&gt;</code></td>
+                </tr>
+                <tr>
+                    <td><strong>inline-block</strong></td>
+                    <td>Perpaduan ajaib keduanya. Mengalir secara mendatar sejajar seperti <code>inline</code>, tapi
+                        <strong>menerima properti <code>width</code>, <code>height</code>, margin, dan padding</strong>
+                        seperti <code>block</code>.
+                    </td>
+                    <td><code>&lt;img&gt;</code>, <code>&lt;button&gt;</code></td>
+                </tr>
+                <tr>
+                    <td><strong>none</strong></td>
+                    <td>Menghilangkan elemen secara total dari halaman. Elemennya seperti musnah dan ruangnya akan diisi
+                        elemen lain.</td>
+                    <td><code>&lt;script&gt;</code>, <code>&lt;style&gt;</code></td>
+                </tr>
+            </table>
+
+            <h3>Contoh Implementasi HTML & CSS</h3>
+            <p>Perhatikan bagaimana mengubah properti display dapat mengubah perilaku elemen HTML:</p>
+            <div class="code-container">
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><span class="token selector">&lt;style&gt;</span>
+  <span class="token selector">.span-jd-block</span> {
+    <span class="token property">display</span>: <span class="token value">block</span>;
+    <span class="token property">background-color</span>: <span class="token value">#bfdbfe</span>;
+    <span class="token property">padding</span>: <span class="token value">10px</span>;
+  }
+  <span class="token selector">.div-jd-inline</span> {
+    <span class="token property">display</span>: <span class="token value">inline</span>;
+    <span class="token property">background-color</span>: <span class="token value">#fca5a5</span>;
+  }
+<span class="token selector">&lt;/style&gt;</span>
+
+<span class="token comment">&lt;!-- &lt;span&gt; aslinya inline, tapi dipaksa jadi block (memenuhi layar dan pindah ke baris baru) --&gt;</span>
+<span class="token selector">&lt;span class="span-jd-block"&gt;</span>Saya adalah span yang berperilaku seperti block.<span class="token selector">&lt;/span&gt;</span>
+
+<span class="token comment">&lt;!-- &lt;div&gt; aslinya block, tapi dipaksa jadi inline (hanya sebesar bungkus teksnya) --&gt;</span>
+<span class="token selector">&lt;div class="div-jd-inline"&gt;</span>Div pertama inline.<span class="token selector">&lt;/div&gt;</span>
+<span class="token selector">&lt;div class="div-jd-inline"&gt;</span>Div kedua bersebelahan.<span class="token selector">&lt;/div&gt;</span></pre>
+            </div>
+        </section>
+
+        <!-- 3. Playground Display -->
+        <section id="playground-display">
+            <h2>3. Interactive Playground: Display</h2>
+            <p>Ubah properti display pada elemen warna oren di bawah ini (yang memiliki tinggi 100px dan lebar 150px)
+                dan lihat dampaknya terhadap elemen-elemen warna biru di sekitarnya.</p>
+            <div class="playground">
+                <div class="controls">
+                    <div class="control-group">
+                        <label>Display Target Elmen:</label>
+                        <select id="disp-style">
+                            <option value="inline">inline</option>
+                            <option value="block">block</option>
+                            <option value="inline-block" selected>inline-block</option>
+                            <option value="none">none</option>
+                        </select>
+                    </div>
+                </div>
+                <code>Target CSS: { width: 150px; height: 100px; display: <span id="disp-code">inline-block</span>; }</code>
+                <div class="preview-area" style="background:#f1f5f9; padding: 20px;">
+                    <div class="disp-item" style="display:inline-block;">Elemen 1</div>
+                    <div class="disp-item" style="display:inline-block;">Elemen 2</div>
+
+                    <div class="disp-target" id="disp-preview" style="display:inline-block; padding:10px;">
+                        TARGET ELEMEN
+                    </div>
+
+                    <div class="disp-item" style="display:inline-block;">Elemen 3</div>
+                    <div class="disp-item" style="display:inline-block;">Elemen 4</div>
+                </div>
+                <p style="margin-top: 15px; font-size:0.9rem; color:var(--text-muted);">
+                    *Perhatikan saat Anda memilih <strong>inline</strong>, paksaan width: 150px dan height: 100px pada
+                    kotak Target akan diabaikan!
+                </p>
+            </div>
+        </section>
+
+        <!-- 4. Box Sizing -->
+        <section id="box-sizing">
+            <h2>4. Masalah klasik: Box Sizing</h2>
+            <p>Pernahkah Anda mengatur elemen menjadi <code>width: 100%</code> tapi justru kotaknya "tumpah" (melebihi
+                lebar layarnya) saat Anda memberikan Padding atau Border?</p>
+            <p>Ini disebabkan oleh cara CSS lawas menghitung total lebar elemen.</p>
+
+            <h3>Terdapat dua jenis Box Sizing:</h3>
+            <ul>
+                <li><strong><code>content-box</code> (Default):</strong> <br>
+                    Jika Anda menulis: <code>width: 200px; padding: 20px; border: 5px;</code>, CSS akan membuang ukuran
+                    padding dan border di <strong>luar</strong> batas width awal. <br>
+                    <em>Lebar Total</em> = 200 (konten) + 40 (padding) + 10 (border) = <strong>250px</strong>. Akibatnya
+                    elemen membengkak dari rencana.
+                </li>
+                <br>
+                <li><strong><code>border-box</code>:</strong> <br>
+                    Jika Anda mendeklarasikan <code>box-sizing: border-box;</code>, maka Padding dan Border akan memakan
+                    ruangan tersebut ke <strong>dalam</strong> tanpa merubah ukuran lebar elemen utamanya. <br>
+                    <em>Lebar Total</em> = Tetap <strong>200px</strong> (Ruang konten tersisa otomatis dikurangi menjadi
+                    150px).
+                </li>
+            </ul>
+
+            <h3>Contoh Implementasi HTML & CSS</h3>
+            <p>Bukti bagaimana <code>border-box</code> menyelamatkan tata letak Anda:</p>
+            <div class="code-container">
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><span class="token selector">&lt;style&gt;</span>
+  <span class="token selector">.box-bawaan</span> {
+    <span class="token property">box-sizing</span>: <span class="token value">content-box</span>; <span class="token comment">/* Bawaan default CSS */</span>
+    <span class="token property">width</span>: <span class="token value">200px</span>;
+    <span class="token property">padding</span>: <span class="token value">25px</span>;
+    <span class="token property">border</span>: <span class="token value">5px solid red</span>;  
+    <span class="token comment">/* Hasil lebar di layar: 200 + 50 (padding kiri-kanan) + 10 (border) = 260px */</span>
+  }
+
+  <span class="token selector">.box-modern</span> {
+    <span class="token property">box-sizing</span>: <span class="token value">border-box</span>;
+    <span class="token property">width</span>: <span class="token value">200px</span>;
+    <span class="token property">padding</span>: <span class="token value">25px</span>;
+    <span class="token property">border</span>: <span class="token value">5px solid green</span>;
+    <span class="token comment">/* Hasil lebar di layar: TETAP 200px secara konsisten */</span>
+  }
+<span class="token selector">&lt;/style&gt;</span>
+
+<span class="token selector">&lt;div class="box-bawaan"&gt;</span>Kotak ini bocor (260px)<span class="token selector">&lt;/div&gt;</span>
+<span class="token selector">&lt;div class="box-modern"&gt;</span>Kotak ini rapi (200px)<span class="token selector">&lt;/div&gt;</span></pre>
+            </div>
+        </section>
+
+        <!-- 5. Playground Box-Sizing -->
+        <section id="playground-boxsizing">
+            <h2>5. Interactive Playground: Box-Sizing</h2>
+            <p>Beri nilai padding dan border yang besar, amati bagaimana <code>content-box</code> merusak pembatas
+                bergaris putus-putus (lebar maskimal 300px), dan bagaimana <code>border-box</code> membuat kotak pintar
+                dalam mengatur diri.</p>
+            <div class="playground">
+                <div class="controls">
+                    <div class="control-group">
+                        <label>Box Sizing Mode:</label>
+                        <select id="bs-mode">
+                            <option value="content-box">content-box (Bawaan CSS)</option>
+                            <option value="border-box">border-box</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label>Padding (kiri-kanan): <span id="bs-pad-val">0</span>px</label>
+                        <input type="range" id="bs-pad" min="0" max="50" value="0">
+                    </div>
+                    <div class="control-group">
+                        <label>Border Width: <span id="bs-bor-val">0</span>px</label>
+                        <input type="range" id="bs-bor" min="0" max="30" value="0">
+                    </div>
+                </div>
+
+                <div class="preview-area" style="padding-top: 50px;">
+                    <div class="parent-box">
+                        <div class="target-box" id="bs-preview" style="box-sizing: content-box;">
+                            <div style="background:var(--primary); color:white; padding:5px; font-weight:bold;">
+                                width: 100%<br>
+                                <span style="font-size: 0.8rem; font-weight:normal;">Total Lebar Realita: <strong
+                                        id="actual-width">300</strong>px</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Best Practices Web Modern -->
+        <section id="best-practices">
+            <h2>6. Best Practices Web Modern</h2>
+            <p>Karena konsep <code>content-box</code> sangat sering mematahkan *layout*, merupakan Standar Emas (*Global
+                Reset*) di era modern untuk memaksa seluruh elemen menggunakan <code>border-box</code>.</p>
+            <p>Selalu tuliskan snippet ini di baris pertama file CSS Anda:</p>
+
+            <div class="code-container">
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><span class="token comment">/* Terapkan border-box ke semua elemen */</span>
+<span class="token selector">*</span>,
+<span class="token selector">*::before</span>,
+<span class="token selector">*::after</span> {
+    <span class="token property">box-sizing</span>: <span class="token value">border-box</span>;
+    <span class="token property">margin</span>: <span class="token value">0</span>;
+    <span class="token property">padding</span>: <span class="token value">0</span>;
+}</pre>
+            </div>
+            <p>Setelah menerapkan kode di atas, saat Anda menulis <code>width: 100%;</code>, maka ia akan benar-benar
+                mencakup padding dan border tanpa merusak tata letak layar Anda.</p>
+        </section>
+
+        <!-- 7. Latihan Praktik -->
+        <section id="latihan-praktik">
+            <h2>7. Latihan Praktik: Menata Menu Navigasi</h2>
+            <p>Elemen daftar atau list (`&lt;li&gt;`) secara default adalah <code>block</code> sehingga ia akan berbaris
+                ke bawah. Jadikan struktur ini sebagai menu navigasi yang berderet ke samping dengan trik
+                <code>inline-block</code>.
+            </p>
+            <div class="code-container">
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><span class="token selector">&lt;style&gt;</span>
+  <span class="token selector">*</span> {
+    <span class="token property">box-sizing</span>: <span class="token value">border-box</span>;
+  }
+  
+  <span class="token selector">.nav-menu</span> {
+    <span class="token property">background-color</span>: <span class="token value">#1e293b</span>;
+    <span class="token property">padding</span>: <span class="token value">15px</span>;
+    <span class="token property">list-style</span>: <span class="token value">none</span>; /* Hilangkan titik-titik pada list */
+  }
+
+  <span class="token selector">.nav-item</span> {
+    <span class="token property">display</span>: <span class="token value">inline-block</span>; /* Ubah perilaku dari "block" ke "inline-block" */
+    <span class="token property">margin-right</span>: <span class="token value">20px</span>;
+  }
+
+  <span class="token selector">.nav-item a</span> {
+    <span class="token property">color</span>: <span class="token value">white</span>;
+    <span class="token property">text-decoration</span>: <span class="token value">none</span>;
+    <span class="token property">padding</span>: <span class="token value">10px 15px</span>;
+    <span class="token property">border-radius</span>: <span class="token value">6px</span>;
+  }
+
+  <span class="token selector">.nav-item a:hover</span> {
+    <span class="token property">background-color</span>: <span class="token value">#3b82f6</span>;
+  }
+<span class="token selector">&lt;/style&gt;</span>
+
+<span class="token selector">&lt;ul class="nav-menu"&gt;</span>
+  <span class="token selector">&lt;li class="nav-item"&gt;&lt;a href="#"&gt;</span>Beranda<span class="token selector">&lt;/a&gt;&lt;/li&gt;</span>
+  <span class="token selector">&lt;li class="nav-item"&gt;&lt;a href="#"&gt;</span>Produk<span class="token selector">&lt;/a&gt;&lt;/li&gt;</span>
+  <span class="token selector">&lt;li class="nav-item"&gt;&lt;a href="#"&gt;</span>Tentang Kami<span class="token selector">&lt;/a&gt;&lt;/li&gt;</span>
+<span class="token selector">&lt;/ul&gt;</span></pre>
+            </div>
+            <p>Silakan simpan dan jalankan di format HTML Anda. Anda akan melihat sebuah *navbar* sederhana dan
+                proporsional tanpa terpotong!</p>
+        </section>
+
+        <!-- 8. Kuis Interaktif -->
+        <section id="kuis">
+            <h2>8. Kuis Interaktif</h2>
+            <div class="quiz-container" id="quiz-block"></div>
+        </section>
+
+        <!-- 9. Ringkasan -->
+        <section id="ringkasan">
+            <h2>9. Ringkasan Akhir</h2>
+            <ul>
+                <li><strong>Block</strong> memakan garis lurus penuh dan bisa diatur *width / height*. </li>
+                <li><strong>Inline</strong> hanya mengambil area sebesar panjang teks, dan
+                    <code>width</code>/<code>height</code> tidak bekerja padanya.
+                </li>
+                <li><strong>Inline-Block</strong> bisa berjajar menyamping seperti Inline, tetapi bisa diberi gaya
+                    ukuran seperti Block.</li>
+                <li>Hampir seluruh *web developer* saat ini menggunakan reset <code>* { box-sizing: border-box; }</code>
+                    demi kewarasan perhitungan layar (mencegah padding membuat elemen bocor melebar).</li>
+            </ul>
+        </section>
+
+        <footer style="text-align: center; margin-top: 50px; color: var(--text-muted); font-size: 0.9rem;">
+            Materi CSS Display dan Box Sizing - Complete Interactive Learning Module
+        </footer>
+    </main>
+
+    <script>
+        // Copy Code Function
+        function copyCode(btn) {
+            const code = btn.nextElementSibling.innerText;
+            navigator.clipboard.writeText(code);
+            btn.innerText = 'Copied!';
+            setTimeout(() => btn.innerText = 'Copy', 2000);
+        }
+
+        // Display Playground
+        const dStyle = document.getElementById('disp-style');
+        const dPreview = document.getElementById('disp-preview');
+        const dCode = document.getElementById('disp-code');
+
+        dStyle.addEventListener('change', () => {
+            dPreview.style.display = dStyle.value;
+            dCode.innerText = dStyle.value;
+        });
+
+        // Box Sizing Playground
+        const bsMode = document.getElementById('bs-mode');
+        const bsPad = document.getElementById('bs-pad');
+        const bsBor = document.getElementById('bs-bor');
+        const bsPreview = document.getElementById('bs-preview');
+        const rActual = document.getElementById('actual-width');
+
+        function updateBoxSizing() {
+            document.getElementById('bs-pad-val').innerText = bsPad.value;
+            document.getElementById('bs-bor-val').innerText = bsBor.value;
+
+            bsPreview.style.boxSizing = bsMode.value;
+            bsPreview.style.padding = `0 ${bsPad.value}px`; // Hanya tambahkan ke kiri & kanan untuk demo linear
+            bsPreview.style.border = `${bsBor.value}px solid var(--border-box-color)`;
+
+            // Gunakan timeout sebentar untuk menunggu layout rendering oleh browser selesai sebelum ditarik nilainya
+            setTimeout(() => {
+                rActual.innerText = bsPreview.offsetWidth;
+                if (bsPreview.offsetWidth > 300) {
+                    rActual.style.color = '#ef4444'; // merah peringatan offset
+                } else {
+                    rActual.style.color = '#fff';
+                }
+            }, 50);
+        }
+
+        bsMode.addEventListener('change', updateBoxSizing);
+        bsPad.addEventListener('input', updateBoxSizing);
+        bsBor.addEventListener('input', updateBoxSizing);
+
+        // Quiz Logic
+        const questions = [
+            {
+                q: "1. Apa properti CSS untuk membuat elemen berjejer menyamping seperti teks namun tetap bisa mengatur properti width (lebar) dan height (tinggi)?",
+                o: ["display: block", "display: inline", "display: inline-block", "display: none"],
+                a: 2,
+                exp: "`inline-block` memungkinkan elemen disejajarkan ke samping satu baris layaknya tipe inline, tetapi mematuhi ukuran lebar dan tinggi layaknya tipe block."
+            },
+            {
+                q: "2. Elemen manakah di bawah ini yang secara bawaan sifatnya adalah 'inline' di dalam HTML?",
+                o: ["&lt;div&gt;", "&lt;span&gt;", "&lt;h1&gt;", "&lt;ul&gt;"],
+                a: 1,
+                exp: "Tag div, h1, dan ul merupakan elemen tipe Block default. Sedangkan span secara default adalah inline."
+            },
+            {
+                q: "3. Saat Anda mengaplikasikan box-sizing: border-box; apa yang akan terjadi jika kita menambahkan padding pada kotak dengan lebar statis?",
+                o: ["Kotak utamanya menjadi lebih lebar mengikuti besar padding yang ditambahkan", "Lebar mutlak kotak akan dipertahankan, sedangkan ruang konten di dalam kotak menyempit", "Biasa saja, box-sizing tidak memengaruhi kalkulasi padding", "Error, karena box-sizing hanya berurusan efek border outline."],
+                a: 1,
+                exp: "Sifat `border-box` menarik masuk dimensi padding dan border ke arah dalam hitungan ukuran yang kita berikan, sehingga element tidak akan jadi bengkak keluar limit."
+            }
+        ];
+
+        const quizBlock = document.getElementById('quiz-block');
+
+        questions.forEach((q, idx) => {
+            const div = document.createElement('div');
+            div.className = 'question';
+            div.innerHTML = `<p><strong>${q.q}</strong></p>
+                <div class="options" id="options-${idx}">
+                    ${q.o.map((opt, i) => `<label><input type="radio" name="q${idx}" value="${i}"> ${opt}</label>`).join('')}
+                </div>
+                <button class="btn" style="margin-top:10px" onclick="checkAnswer(${idx})">Periksa Jawaban</button>
+                <div id="res-${idx}" class="result-msg"></div>`;
+            quizBlock.appendChild(div);
+        });
+
+        function checkAnswer(idx) {
+            const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+            const resDiv = document.getElementById(`res-${idx}`);
+            if (!selected) {
+                resDiv.innerText = "Pilih jawaban terlebih dahulu!";
+                resDiv.className = "result-msg wrong";
+                return;
+            }
+            if (parseInt(selected.value) === questions[idx].a) {
+                resDiv.innerHTML = `Benar! ${questions[idx].exp}`;
+                resDiv.className = "result-msg correct";
+            } else {
+                resDiv.innerHTML = `Salah. ${questions[idx].exp}`;
+                resDiv.className = "result-msg wrong";
+            }
+        }
+
+        // Initialize simulation output upon load
+        updateBoxSizing();
+    </script>
+</body>
+
+</html>

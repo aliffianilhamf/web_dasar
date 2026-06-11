@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modul Interaktif: CSS Padding & Margin</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --secondary: #10b981;
+            --bg-color: #f8fafc;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --sidebar-width: 280px;
+
+            /* Box Model Colors */
+            --margin-color: #fca5a5;
+            --border-box-color: #fde047;
+            --padding-color: #bbf7d0;
+            --content-color: #bfdbfe;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            color: var(--text-main);
+            background-color: var(--bg-color);
+            line-height: 1.6;
+            display: flex;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: var(--sidebar-width);
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: white;
+            border-right: 1px solid var(--border-color);
+            padding: 20px 0;
+            overflow-y: auto;
+            z-index: 100;
+        }
+
+        .sidebar h2 {
+            padding: 0 20px;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar li a {
+            display: block;
+            padding: 8px 20px;
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: background 0.2s;
+        }
+
+        .sidebar li a:hover {
+            background: #f1f5f9;
+            color: var(--primary);
+        }
+
+        /* Main Content */
+        .content {
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            width: calc(100% - var(--sidebar-width));
+            max-width: 1000px;
+        }
+
+        section {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+        }
+
+        h1,
+        h2,
+        h3 {
+            margin-bottom: 15px;
+            color: #0f172a;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-top: 30px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 5px;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            margin-top: 20px;
+        }
+
+        p,
+        ul,
+        ol {
+            margin-bottom: 15px;
+        }
+
+        ul,
+        ol {
+            margin-left: 20px;
+        }
+
+        /* Code Blocks & Syntax Highlighting */
+        .code-container {
+            position: relative;
+            background: #1e1e1e;
+            border-radius: 8px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: background 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        pre {
+            padding: 15px;
+            overflow-x: auto;
+            color: #d4d4d4;
+            font-family: 'Consolas', monospace;
+            font-size: 0.95rem;
+        }
+
+        .token.property {
+            color: #9cdcfe;
+        }
+
+        .token.value {
+            color: #ce9178;
+        }
+
+        .token.selector {
+            color: #d7ba7d;
+        }
+
+        /* Diagrams & Visuals */
+        .box-model-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            background: #f8fafc;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .bm-margin {
+            background: var(--margin-color);
+            padding: 30px;
+            border: 2px dashed #ef4444;
+            border-radius: 8px;
+        }
+
+        .bm-border {
+            background: var(--border-box-color);
+            padding: 5px;
+            border: 2px solid #ca8a04;
+        }
+
+        .bm-padding {
+            background: var(--padding-color);
+            padding: 30px;
+            border: 2px dashed #22c55e;
+        }
+
+        .bm-content {
+            background: var(--content-color);
+            padding: 40px;
+            border: 2px solid #3b82f6;
+        }
+
+        /* Playgrounds */
+        .playground {
+            background: #f1f5f9;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin: 20px 0;
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .preview-area {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 200px;
+            background: white;
+            border: 1px dashed #cbd5e1;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .preview-box {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            transition: all 0.2s;
+            border: 5px solid #000;
+        }
+
+        /* Quiz */
+        .quiz-container {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .options label {
+            display: block;
+            padding: 8px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .options label:hover {
+            background: #e2e8f0;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.2s;
+        }
+
+        .btn:hover {
+            background: var(--primary-hover);
+        }
+
+        .result-msg {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .correct {
+            color: var(--secondary);
+        }
+
+        .wrong {
+            color: #ef4444;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        th,
+        td {
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #f1f5f9;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+
+            .content {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .controls {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="sidebar">
+        <h2>Daftar Isi</h2>
+        <ul>
+            <li><a href="#pendahuluan">1. Pendahuluan</a></li>
+            <li><a href="#box-model">2. Mengenal CSS Box Model</a></li>
+            <li><a href="#padding">3. Padding</a></li>
+            <li><a href="#margin">4. Margin</a></li>
+            <li><a href="#perbedaan">5. Perbedaan Padding vs Margin</a></li>
+            <li><a href="#margin-collapse">6. Margin Collapse</a></li>
+            <li><a href="#layout-modern">7. Layout Modern</a></li>
+            <li><a href="#flexbox">8. Flexbox</a></li>
+            <li><a href="#grid">9. CSS Grid</a></li>
+            <li><a href="#studi-kasus">10. Studi Kasus</a></li>
+            <li><a href="#best-practices">11. Best Practices</a></li>
+            <li><a href="#kesalahan">12. Kesalahan Umum</a></li>
+            <li><a href="#cheatsheet">13. Cheat Sheet</a></li>
+            <li><a href="#playground-gabungan">14. Playground Gabungan</a></li>
+            <li><a href="#kuis">15. Kuis Interaktif</a></li>
+            <li><a href="#latihan-praktik">16. Latihan Praktik</a></li>
+            <li><a href="#ringkasan">17. Ringkasan Akhir</a></li>
+        </ul>
+    </nav>
+
+    <main class="content">
+        <!-- 1. Pendahuluan -->
+        <section id="pendahuluan">
+            <h1>1. Pendahuluan</h1>
+            <p>Selamat datang di modul interaktif lengkap mengenai <strong>CSS Padding dan Margin</strong>. Setiap
+                elemen HTML pada halaman web pada dasarnya adalah sebuah kotak (box). Memahami bagaimana kotak-kotak ini
+                diberi ruang adalah kunci utama dalam web development.</p>
+
+            <h3>Apa itu CSS Box Model?</h3>
+            <p>Box Model adalah konsep dasar dalam CSS yang membungkus setiap elemen HTML. Terdiri dari margin, border,
+                padding, dan content aktual.</p>
+
+            <h3>Mengapa Spacing Penting?</h3>
+            <ul>
+                <li>Meningkatkan keterbacaan konten (readability).</li>
+                <li>Memberikan hierarki visual yang jelas.</li>
+                <li>Mencegah elemen terlihat menumpuk dan berantakan.</li>
+            </ul>
+
+            <h3>Kesalahan Umum Pemula</h3>
+            <p>Pemula sering kali menebak-nebak antara menggunakan padding atau margin, yang berujung pada layout yang
+                hancur saat ukuran layar berubah.</p>
+        </section>
+
+        <!-- 2. Mengenal CSS Box Model -->
+        <section id="box-model">
+            <h2>2. Mengenal CSS Box Model</h2>
+            <p>Setiap elemen web terdiri dari 4 layer utama dari dalam ke luar:</p>
+            <ol>
+                <li><strong>Content:</strong> Isi elemen (teks, gambar).</li>
+                <li><strong>Padding:</strong> Ruang transparan di dalam elemen, antara content dan border.</li>
+                <li><strong>Border:</strong> Garis batas elemen.</li>
+                <li><strong>Margin:</strong> Ruang transparan di luar elemen, memisahkan elemen ini dari elemen lain.
+                </li>
+            </ol>
+
+            <div class="box-model-diagram">
+                <div class="bm-margin">
+                    Margin (Luar)
+                    <div class="bm-border">
+                        Border
+                        <div class="bm-padding">
+                            Padding (Dalam)
+                            <div class="bm-content">
+                                Content Area
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Padding -->
+        <section id="padding">
+            <h2>3. Padding</h2>
+            <h3>Definisi Padding</h3>
+            <p>Padding adalah ruang kosong di area dalam elemen, tepatnya di antara konten dan batas (border). Padding
+                digunakan ketika Anda ingin melapangkan isi dari tepi kotaknya, dan padding mengambil warna background
+                yang sama dengan elemen tersebut.</p>
+
+            <h3>Sintaks Dasar & Per Sisi</h3>
+            <div class="code-container">
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><span class="token selector">.box</span> {
+    <span class="token property">padding-top</span>: <span class="token value">10px</span>;
+    <span class="token property">padding-right</span>: <span class="token value">20px</span>;
+    <span class="token property">padding-bottom</span>: <span class="token value">10px</span>;
+    <span class="token property">padding-left</span>: <span class="token value">20px</span>;
+}</pre>
+            </div>
+
+            <h3>Shorthand Padding</h3>
+            <p>CSS menyediakan singkatan (shorthand) searah jarum jam (Top, Right, Bottom, Left):</p>
+            <ul>
+                <li><code>padding: 20px;</code> (Semua sisi 20px)</li>
+                <li><code>padding: 20px 40px;</code> (Atas-Bawah 20px, Kiri-Kanan 40px)</li>
+                <li><code>padding: 20px 40px 10px;</code> (Atas 20px, Kiri-Kanan 40px, Bawah 10px)</li>
+                <li><code>padding: 20px 40px 10px 5px;</code> (Atas, Kanan, Bawah, Kiri)</li>
+            </ul>
+
+            <h3>Contoh Implementasi HTML & CSS</h3>
+            <p>Cobalah ketik kode berikut di file terpisah untuk melihat efek padding secara langsung:</p>
+            <div class="code-container">
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><span class="token selector">&lt;style&gt;</span>
+  <span class="token selector">.card-padding</span> {
+    <span class="token property">background-color</span>: <span class="token value">#bfdbfe</span>;
+    <span class="token property">padding</span>: <span class="token value">30px</span>;
+    <span class="token property">border</span>: <span class="token value">2px solid #3b82f6</span>;
+  }
+<span class="token selector">&lt;/style&gt;</span>
+
+<span class="token selector">&lt;div class="card-padding"&gt;</span>
+  Teks di dalam kotak ini didorong sejauh 30px dari border karena padding.
+<span class="token selector">&lt;/div&gt;</span></pre>
+            </div>
+
+            <h3>Interactive Playground: Padding</h3>
+            <div class="playground">
+                <div class="controls">
+                    <div class="control-group">
+                        <label>Padding Top: <span id="pt-val">20</span>px</label>
+                        <input type="range" id="pad-top" min="0" max="100" value="20">
+                    </div>
+                    <div class="control-group">
+                        <label>Padding Right: <span id="pr-val">20</span>px</label>
+                        <input type="range" id="pad-right" min="0" max="100" value="20">
+                    </div>
+                    <div class="control-group">
+                        <label>Padding Bottom: <span id="pb-val">20</span>px</label>
+                        <input type="range" id="pad-bottom" min="0" max="100" value="20">
+                    </div>
+                    <div class="control-group">
+                        <label>Padding Left: <span id="pl-val">20</span>px</label>
+                        <input type="range" id="pad-left" min="0" max="100" value="20">
+                    </div>
+                </div>
+                <code>padding: <span id="pad-code">20px 20px 20px 20px</span>;</code>
+                <div class="preview-area">
+                    <div class="preview-box" id="pad-preview" style="padding: 20px;">
+                        Konten
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Margin -->
+        <section id="margin">
+            <h2>4. Margin</h2>
+            <h3>Definisi Margin</h3>
+            <p>Margin adalah ruang di sebelah luar elemen (di luar border). Margin menolak elemen lain menjauh. Margin
+                selalu transparan dan tidak ikut diwarnai oleh background elemen.</p>
+
+            <h3>Shorthand Margin</h3>
+            <p>Sama seperti padding, dibaca searah jarum jam:</p>
+            <div class="code-container">
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><span class="token selector">.elemen</span> {
+    <span class="token property">margin</span>: <span class="token value">10px 20px 30px 40px</span>; /* Top Right Bottom Left */
+}</pre>
+            </div>
+
+            <h3>Contoh Implementasi HTML & CSS</h3>
+            <p>Kode di bawah ini menunjukkan bagaimana margin memisahkan dua elemen HTML agar tidak saling menempel:</p>
+            <div class="code-container">
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><span class="token selector">&lt;style&gt;</span>
+  <span class="token selector">.box-margin</span> {
+    <span class="token property">background-color</span>: <span class="token value">#fca5a5</span>;
+    <span class="token property">padding</span>: <span class="token value">15px</span>;
+    <span class="token property">margin-bottom</span>: <span class="token value">25px</span>;
+  }
+<span class="token selector">&lt;/style&gt;</span>
+
+<span class="token selector">&lt;div class="box-margin"&gt;</span>Kotak Pertama<span class="token selector">&lt;/div&gt;</span>
+<span class="token selector">&lt;div class="box-margin"&gt;</span>Kotak Kedua berjarak 25px dari kotak pertama<span class="token selector">&lt;/div&gt;</span></pre>
+            </div>
+
+            <h3>Margin Auto & Centering</h3>
+            <p><code>margin: auto;</code> sering digunakan pada blok elemen (yang memiliki width) untuk memposisikannya
+                di tengah horizontal secara otomatis.</p>
+            <div class="preview-area" style="background:#e2e8f0;">
+                <div
+                    style="background:var(--primary); color:white; width: 50%; margin: 0 auto; padding: 10px; text-align:center;">
+                    Div ini di tengah berkat margin: 0 auto;
+                </div>
+            </div>
+
+            <h3>Interactive Playground: Margin</h3>
+            <div class="playground">
+                <div class="controls">
+                    <div class="control-group">
+                        <label>Margin Semua Sisi: <span id="m-val">20</span>px</label>
+                        <input type="range" id="mag-all" min="-50" max="100" value="20">
+                    </div>
+                </div>
+                <div class="preview-area" style="background: #f1f5f9; display: block; border: 1px solid #ccc;">
+                    <div style="background: var(--secondary); color:white; padding:10px;">Elemen Atas</div>
+                    <div class="preview-box" id="mag-preview" style="margin: 20px;">Elemen Target (berubah marginnya)
+                    </div>
+                    <div style="background: var(--secondary); color:white; padding:10px;">Elemen Bawah</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Perbedaan -->
+        <section id="perbedaan">
+            <h2>5. Perbedaan Padding vs Margin</h2>
+            <table>
+                <tr>
+                    <th>Aspek</th>
+                    <th>Padding</th>
+                    <th>Margin</th>
+                </tr>
+                <tr>
+                    <td>Lokasi</td>
+                    <td>Di dalam Border</td>
+                    <td>Di luar Border</td>
+                </tr>
+                <tr>
+                    <td>Efek Background</td>
+                    <td>Mengikuti background elemen</td>
+                    <td>Transparan (Background parent)</td>
+                </tr>
+                <tr>
+                    <td>Fungsi Utama</td>
+                    <td>Membesarkan ruang dalam, menjauhkan teks dari pinggir</td>
+                    <td>Mendorong elemen lain agar tidak berdempetan</td>
+                </tr>
+                <tr>
+                    <td>Nilai Negatif</td>
+                    <td>Tidak Diizinkan</td>
+                    <td>Diizinkan (Negative Margin)</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- 6. Margin Collapse -->
+        <section id="margin-collapse">
+            <h2>6. Margin Collapse</h2>
+            <p>Margin Collapse adalah kondisi di mana margin vertikal (top dan bottom) dari dua elemen yang bersentuhan
+                bergabung menjadi satu margin yang nilainya sama dengan margin terbesar (bukan dijumlahkan).</p>
+            <div class="code-container">
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><span class="token selector">&lt;style&gt;</span>
+  <span class="token selector">.box1</span> { 
+    <span class="token property">margin-bottom</span>: <span class="token value">50px</span>; 
+    <span class="token property">background-color</span>: <span class="token value">#fde047</span>;
+  }
+  <span class="token selector">.box2</span> { 
+    <span class="token property">margin-top</span>: <span class="token value">30px</span>; 
+    <span class="token property">background-color</span>: <span class="token value">#bbf7d0</span>;
+  }
+<span class="token selector">&lt;/style&gt;</span>
+
+<span class="token selector">&lt;div class="box1"&gt;</span>Box Pertama<span class="token selector">&lt;/div&gt;</span>
+<span class="token selector">&lt;div class="box2"&gt;</span>Box Kedua<span class="token selector">&lt;/div&gt;</span></pre>
+            </div>
+            <p>Jarak akhir antara box1 dan box2 adalah <strong>50px</strong>, bukan 80px.</p>
+        </section>
+
+        <!-- 14. Playground Gabungan -->
+        <section id="playground-gabungan">
+            <h2>14. Playground Box Model Gabungan</h2>
+            <p>Ubah nilai di bawah dan lihat bagaimana ukuran total terpengaruh (perhatikan efek box-sizing yang tidak
+                kita manipulasi, sehingga padding menambah lebar total).</p>
+            <div class="playground">
+                <div class="controls">
+                    <div class="control-group">
+                        <label>Padding: <span id="all-pad-val">20</span>px</label>
+                        <input type="range" id="all-pad" min="0" max="50" value="20">
+                    </div>
+                    <div class="control-group">
+                        <label>Margin: <span id="all-mag-val">20</span>px</label>
+                        <input type="range" id="all-mag" min="0" max="50" value="20">
+                    </div>
+                    <div class="control-group">
+                        <label>Border Width: <span id="all-bor-val">5</span>px</label>
+                        <input type="range" id="all-bor" min="0" max="20" value="5">
+                    </div>
+                </div>
+                <div class="preview-area" style="background:#fff; border: 1px dashed #ccc;">
+                    <div id="all-preview"
+                        style="background:var(--content-color); padding: 20px; margin: 20px; border: 5px solid var(--border-box-color); text-align:center;">
+                        Content Area (Lebar Tetap)
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 15. Kuis Interaktif -->
+        <section id="kuis">
+            <h2>15. Kuis Interaktif</h2>
+            <div class="quiz-container" id="quiz-block">
+                <!-- Quiz JS will populate -->
+            </div>
+        </section>
+
+        <!-- 16. Latihan Praktik -->
+        <section id="latihan-praktik">
+            <h2>16. Latihan Praktik: Membuat Card Profile</h2>
+            <p>Tugas Anda adalah mempraktikkan teori yang sudah dipelajari dengan membuat sebuah <strong>Card
+                    Profile</strong> mandiri. Ketiklah HTML dan CSS berikut dan bereksperimen dengan mengubah nilai
+                padding dan margin-nya.</p>
+            <div class="code-container">
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><span class="token selector">&lt;!DOCTYPE html&gt;</span>
+<span class="token selector">&lt;html&gt;</span>
+<span class="token selector">&lt;head&gt;</span>
+  <span class="token selector">&lt;style&gt;</span>
+    <span class="token selector">body</span> {
+      <span class="token property">background-color</span>: <span class="token value">#e2e8f0</span>;
+      <span class="token property">margin</span>: <span class="token value">0</span>;
+      <span class="token property">padding</span>: <span class="token value">50px</span>; /* Jarak agar card tidak menyentuh layar */
+    }
+    <span class="token selector">.card</span> {
+      <span class="token property">background-color</span>: <span class="token value">white</span>;
+      <span class="token property">width</span>: <span class="token value">300px</span>;
+      <span class="token property">margin</span>: <span class="token value">0 auto</span>; /* Card di-center secara horizontal */
+      <span class="token property">padding</span>: <span class="token value">25px</span>;  /* Teks dan tombol tidak menempel ke border */
+      <span class="token property">border-radius</span>: <span class="token value">12px</span>;
+      <span class="token property">box-shadow</span>: <span class="token value">0 4px 6px rgba(0,0,0,0.1)</span>;
+      <span class="token property">text-align</span>: <span class="token value">center</span>;
+    }
+    <span class="token selector">.card h3</span> {
+      <span class="token property">margin-top</span>: <span class="token value">0</span>;
+      <span class="token property">margin-bottom</span>: <span class="token value">10px</span>; /* Jarak dengan teks profesi */
+    }
+    <span class="token selector">.card p</span> {
+      <span class="token property">margin-bottom</span>: <span class="token value">20px</span>; /* Jarak antara teks profesi dan tombol */
+      <span class="token property">color</span>: <span class="token value">#64748b</span>;
+    }
+    <span class="token selector">.btn-contact</span> {
+      <span class="token property">display</span>: <span class="token value">inline-block</span>;
+      <span class="token property">padding</span>: <span class="token value">10px 20px</span>; /* Ruang di dalam tombol */
+      <span class="token property">background-color</span>: <span class="token value">#2563eb</span>;
+      <span class="token property">color</span>: <span class="token value">white</span>;
+      <span class="token property">text-decoration</span>: <span class="token value">none</span>;
+      <span class="token property">border-radius</span>: <span class="token value">6px</span>;
+    }
+  <span class="token selector">&lt;/style&gt;</span>
+<span class="token selector">&lt;/head&gt;</span>
+<span class="token selector">&lt;body&gt;</span>
+  <span class="token selector">&lt;div class="card"&gt;</span>
+    <span class="token selector">&lt;h3&gt;</span>Ahmad Fulan<span class="token selector">&lt;/h3&gt;</span>
+    <span class="token selector">&lt;p&gt;</span>Frontend Developer<span class="token selector">&lt;/p&gt;</span>
+    <span class="token selector">&lt;a href="#" class="btn-contact"&gt;</span>Hubungi Saya<span class="token selector">&lt;/a&gt;</span>
+  <span class="token selector">&lt;/div&gt;</span>
+<span class="token selector">&lt;/body&gt;</span>
+<span class="token selector">&lt;/html&gt;</span></pre>
+            </div>
+        </section>
+
+        <!-- 17. Ringkasan Akhir -->
+        <section id="ringkasan">
+            <h2>17. Ringkasan Akhir</h2>
+            <ul>
+                <li><strong>Padding</strong> untuk ruang dalam, <strong>Margin</strong> untuk ruang luar.</li>
+                <li>Gunakan <code>margin: 0 auto;</code> untuk centering div.</li>
+                <li>Hati-hati dengan <strong>Margin collapse</strong> pada aliran vertikal antar blok.</li>
+                <li>Pada Flexbox dan Grid moderen, properti <code>gap</code> sangat direkomendasikan untuk menggantikan
+                    fungsi margin antar elemen.</li>
+            </ul>
+        </section>
+
+        <footer style="text-align: center; margin-top: 50px; color: var(--text-muted); font-size: 0.9rem;">
+            Materi CSS Padding dan Margin - Complete Interactive Learning Module
+        </footer>
+    </main>
+
+    <script>
+        // Copy Code Function
+        function copyCode(btn) {
+            const code = btn.nextElementSibling.innerText;
+            navigator.clipboard.writeText(code);
+            btn.innerText = 'Copied!';
+            setTimeout(() => btn.innerText = 'Copy', 2000);
+        }
+
+        // Padding Playground
+        const pT = document.getElementById('pad-top');
+        const pR = document.getElementById('pad-right');
+        const pB = document.getElementById('pad-bottom');
+        const pL = document.getElementById('pad-left');
+        const pPreview = document.getElementById('pad-preview');
+        const pCode = document.getElementById('pad-code');
+
+        function updatePadding() {
+            document.getElementById('pt-val').innerText = pT.value;
+            document.getElementById('pr-val').innerText = pR.value;
+            document.getElementById('pb-val').innerText = pB.value;
+            document.getElementById('pl-val').innerText = pL.value;
+
+            pPreview.style.paddingTop = pT.value + 'px';
+            pPreview.style.paddingRight = pR.value + 'px';
+            pPreview.style.paddingBottom = pB.value + 'px';
+            pPreview.style.paddingLeft = pL.value + 'px';
+
+            pCode.innerText = `${pT.value}px ${pR.value}px ${pB.value}px ${pL.value}px`;
+        }
+
+        pT.addEventListener('input', updatePadding);
+        pR.addEventListener('input', updatePadding);
+        pB.addEventListener('input', updatePadding);
+        pL.addEventListener('input', updatePadding);
+
+        // Margin Playground
+        const mAll = document.getElementById('mag-all');
+        const mPreview = document.getElementById('mag-preview');
+        mAll.addEventListener('input', (e) => {
+            document.getElementById('m-val').innerText = e.target.value;
+            mPreview.style.margin = e.target.value + 'px';
+        });
+
+        // Combined Playground
+        const aPad = document.getElementById('all-pad');
+        const aMag = document.getElementById('all-mag');
+        const aBor = document.getElementById('all-bor');
+        const aPreview = document.getElementById('all-preview');
+
+        function updateAll() {
+            document.getElementById('all-pad-val').innerText = aPad.value;
+            document.getElementById('all-mag-val').innerText = aMag.value;
+            document.getElementById('all-bor-val').innerText = aBor.value;
+
+            // Adding visualization of padding by adding an inner wrapper or setting backgrounds
+            // Here we just modify styles based on root variables to simulate
+            aPreview.style.padding = aPad.value + 'px';
+            aPreview.style.margin = aMag.value + 'px';
+            aPreview.style.borderWidth = aBor.value + 'px';
+        }
+        aPad.addEventListener('input', updateAll);
+        aMag.addEventListener('input', updateAll);
+        aBor.addEventListener('input', updateAll);
+
+        // Quiz Logic
+        const questions = [
+            {
+                q: "1. Apa properti CSS yang digunakan untuk mengatur ruang di DALAM border elemen?",
+                o: ["Margin", "Padding", "Spacing", "Border"],
+                a: 1,
+                exp: "Padding mengatur jarak antara content dan border."
+            },
+            {
+                q: "2. Urutan shorthand `padding: 10px 20px 30px 40px;` adalah?",
+                o: ["Top, Bottom, Left, Right", "Top, Right, Bottom, Left", "Left, Right, Top, Bottom", "Bottom, Left, Right, Top"],
+                a: 1,
+                exp: "Searah jarum jam: Top, Right, Bottom, Left."
+            },
+            {
+                q: "3. Fenomena dimana dua margin vertikal bergabung menjadi satu disebut?",
+                o: ["Margin Union", "Margin Collapse", "Margin Merge", "Margin Padding"],
+                a: 1,
+                exp: "Disebut Margin Collapse."
+            }
+        ];
+
+        const quizBlock = document.getElementById('quiz-block');
+
+        questions.forEach((q, idx) => {
+            const div = document.createElement('div');
+            div.className = 'question';
+            div.innerHTML = `<p><strong>${q.q}</strong></p>
+                <div class="options" id="options-${idx}">
+                    ${q.o.map((opt, i) => `<label><input type="radio" name="q${idx}" value="${i}"> ${opt}</label>`).join('')}
+                </div>
+                <button class="btn" style="margin-top:10px" onclick="checkAnswer(${idx})">Periksa Rejawaban</button>
+                <div id="res-${idx}" class="result-msg"></div>`;
+            quizBlock.appendChild(div);
+        });
+
+        function checkAnswer(idx) {
+            const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+            const resDiv = document.getElementById(`res-${idx}`);
+            if (!selected) {
+                resDiv.innerText = "Pilih jawaban dulu!";
+                resDiv.className = "result-msg wrong";
+                return;
+            }
+            if (parseInt(selected.value) === questions[idx].a) {
+                resDiv.innerHTML = `Benar! ${questions[idx].exp}`;
+                resDiv.className = "result-msg correct";
+            } else {
+                resDiv.innerHTML = `Salah. ${questions[idx].exp}`;
+                resDiv.className = "result-msg wrong";
+            }
+        }
+    </script>
+</body>
+
+</html>

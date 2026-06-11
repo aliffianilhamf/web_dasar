@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modul Interaktif: CSS Flexbox</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --secondary: #10b981;
+            --bg-color: #f8fafc;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --sidebar-width: 280px;
+
+            /* Flexbox Specific Colors */
+            --flex-parent: #cbd5e1;
+            --flex-child: #3b82f6;
+            --flex-child-alt: #8b5cf6;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            color: var(--text-main);
+            background-color: var(--bg-color);
+            line-height: 1.6;
+            display: flex;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: var(--sidebar-width);
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: white;
+            border-right: 1px solid var(--border-color);
+            padding: 20px 0;
+            overflow-y: auto;
+            z-index: 100;
+        }
+
+        .sidebar h2 {
+            padding: 0 20px;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar li a {
+            display: block;
+            padding: 8px 20px;
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: background 0.2s;
+        }
+
+        .sidebar li a:hover {
+            background: #f1f5f9;
+            color: var(--primary);
+        }
+
+        /* Main Content */
+        .content {
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            width: calc(100% - var(--sidebar-width));
+            max-width: 1000px;
+        }
+
+        section {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+        }
+
+        h1,
+        h2,
+        h3 {
+            margin-bottom: 15px;
+            color: #0f172a;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-top: 30px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 5px;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            margin-top: 20px;
+        }
+
+        p,
+        ul,
+        ol {
+            margin-bottom: 15px;
+        }
+
+        ul,
+        ol {
+            margin-left: 20px;
+        }
+
+        /* Code Blocks & Syntax Highlighting */
+        .code-container {
+            position: relative;
+            background: #1e1e1e;
+            border-radius: 8px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: background 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        pre {
+            padding: 15px;
+            overflow-x: auto;
+            color: #d4d4d4;
+            font-family: 'Consolas', monospace;
+            font-size: 0.95rem;
+        }
+
+        .token.property {
+            color: #9cdcfe;
+        }
+
+        .token.value {
+            color: #ce9178;
+        }
+
+        .token.selector {
+            color: #d7ba7d;
+        }
+
+        .token.comment {
+            color: #6a9955;
+            font-style: italic;
+        }
+
+        /* Playgrounds */
+        .playground {
+            background: #f1f5f9;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin: 20px 0;
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .control-group select,
+        .control-group input {
+            margin-top: 5px;
+            padding: 6px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        .preview-area {
+            background: white;
+            border: 2px dashed #94a3b8;
+            padding: 10px;
+            border-radius: 8px;
+            min-height: 250px;
+        }
+
+        /* Flexbox Demo Specifics */
+        .flex-demo-container {
+            display: flex;
+            background-color: var(--flex-parent);
+            height: 100%;
+            min-height: 200px;
+            padding: 10px;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+
+        .flex-box {
+            background-color: var(--flex-child);
+            color: white;
+            font-weight: bold;
+            padding: 20px;
+            margin: 5px;
+            /* Default margin untuk kotak lama, bisa di-override dgn gap */
+            border-radius: 6px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 60px;
+            min-height: 60px;
+        }
+
+        /* Quiz */
+        .quiz-container {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .options label {
+            display: block;
+            padding: 8px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .options label:hover {
+            background: #e2e8f0;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.2s;
+        }
+
+        .btn:hover {
+            background: var(--primary-hover);
+        }
+
+        .result-msg {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .correct {
+            color: var(--secondary);
+        }
+
+        .wrong {
+            color: #ef4444;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        th,
+        td {
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #f1f5f9;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+
+            .content {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .controls {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="sidebar">
+        <h2>Daftar Isi</h2>
+        <ul>
+            <li><a href="#pendahuluan">1. Apa itu Flexbox?</a></li>
+            <li><a href="#konsep-sumbu">2. Konsep Sumbu (Axis)</a></li>
+            <li><a href="#aktifkan-flexbox">3. display: flex;</a></li>
+            <li><a href="#justify-align">4. Justify & Align</a></li>
+            <li><a href="#direction-wrap">5. Arah, Bungkus, & Gap</a></li>
+            <li><a href="#flex-items">6. Properti untuk Anak</a></li>
+            <li><a href="#playground-gabungan">7. Playground Flexbox</a></li>
+            <li><a href="#latihan-praktik">8. Latihan Navbar Modern</a></li>
+            <li><a href="#kuis">9. Kuis Interaktif</a></li>
+            <li><a href="#ringkasan">10. Ringkasan Akhir</a></li>
+        </ul>
+    </nav>
+
+    <main class="content">
+        <!-- 1. Pendahuluan -->
+        <section id="pendahuluan">
+            <h1>1. Flexbox (Flexible Box)</h1>
+            <p><strong>Flexbox</strong> adalah modul tata letak CSS yang dirancang khusus untuk mengatur penempatan
+                (layout) pada antarmuka web, khususnya menata deretan elemen dalam <strong>satu dimensi</strong> (satu
+                baris mendatar OR satu kolom menurun).</p>
+            <p>Hadirnya Flexbox menggantikan metode lama yang rumit (seperti *float* dan perhitungan rumit *margin*),
+                menjadikannya standar wajid industri web modern.</p>
+            <p>Kunci memahami Flexbox terletak pada pemahaman hubungan antara bagian <strong>Induk (Flex
+                    Container)</strong> dan bagian <strong>Anak (Flex Items)</strong> di dalamnya.</p>
+        </section>
+
+        <!-- 2. Konsep Sumbu (Axis) -->
+        <section id="konsep-sumbu">
+            <h2>2. 🗺️ Konsep Sumbu Utama dan Melintang</h2>
+            <p>Di Flexbox, elemen-elemen mengalir pada suatu Sumbu (Axis). Mengetahui arah sumbu ini wajib, karena arah
+                ini akan mendikte cara properti Flexbox bekerja.</p>
+            <ul>
+                <li><strong>Main Axis (Sumbu Utama):</strong> Arah tempat bernaungnya *Flex Items* disejajarkan. Secara
+                    default, arahnya dari KIRI ke KANAN (horizontal).</li>
+                <li><strong>Cross Axis (Sumbu Melintang):</strong> Arah yang tegak lurus memotong *Main Axis*. Secara
+                    default, arahnya dari ATAS ke BAWAH (vertikal).</li>
+            </ul>
+        </section>
+
+        <!-- 3. Aktifkan Flexbox -->
+        <section id="aktifkan-flexbox">
+            <h2>3. 🪄 Perintah Ajaib: `display: flex;`</h2>
+            <p>Semua kesaktian Flexbox dimulai dengan menyuntikkan properti <code>display: flex;</code> ke elemen
+                <strong>pembungkusnya (parent)</strong>. Begitu diaktifkan, semua elemen keturunan langsungnya secara
+                otomatis berubah sejajar dan rapi.</p>
+
+            <div class="code-container">
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><span class="token selector">&lt;style&gt;</span>
+  <span class="token selector">.container</span> {
+    <span class="token property">display</span>: <span class="token value">flex</span>;
+    <span class="token property">background-color</span>: <span class="token value">#e2e8f0</span>;
+    <span class="token property">padding</span>: <span class="token value">10px</span>;
+  }
+  <span class="token selector">.item</span> {
+    <span class="token property">background-color</span>: <span class="token value">#3b82f6</span>;
+    <span class="token property">color</span>: <span class="token value">white</span>;
+    <span class="token property">padding</span>: <span class="token value">20px</span>;
+    <span class="token property">margin</span>: <span class="token value">5px</span>;
+  }
+<span class="token selector">&lt;/style&gt;</span>
+
+<span class="token selector">&lt;div class="container"&gt;</span>
+  <span class="token selector">&lt;div class="item"&gt;</span>Anak 1<span class="token selector">&lt;/div&gt;</span>
+  <span class="token selector">&lt;div class="item"&gt;</span>Anak 2<span class="token selector">&lt;/div&gt;</span>
+  <span class="token selector">&lt;div class="item"&gt;</span>Anak 3<span class="token selector">&lt;/div&gt;</span>
+<span class="token selector">&lt;/div&gt;</span></pre>
+            </div>
+            <p>Hanya dengan menyematkan <code>display: flex;</code>, seketika `div` yang tadinya menumpuk dari atas ke
+                bawah (ingat sifat *block*), akan berubah berjajar lurus secara horizontal.</p>
+        </section>
+
+        <!-- 4. Justify Content & Align Items -->
+        <section id="justify-align">
+            <h2>4. Merapikan Barisan: Justify & Align</h2>
+            <p>Dua properti ini yang membuat Flexbox begitu dicintai untuk menengahkan atau mengatur jarak elemen.</p>
+
+            <h3>justify-content</h3>
+            <p>Mengatur kelurusan item di sepanjang <strong>Sumbu Utama (Main Axis)</strong> / defaultnya *Horizontal*.
+            </p>
+            <ul>
+                <li><code>flex-start</code>: Rata kiri (default)</li>
+                <li><code>flex-end</code>: Rata kanan</li>
+                <li><code>center</code>: Tepat di tengah-tengah</li>
+                <li><code>space-between</code>: Jarak menyebar merata, menempel ke ujung kiri-kanan.</li>
+                <li><code>space-around</code> / <code>space-evenly</code>: Jarak menyebar secara adil di sekeliling
+                    item.</li>
+            </ul>
+
+            <h3>align-items</h3>
+            <p>Mengatur kelurusan item memotong <strong>Sumbu Melintang (Cross Axis)</strong> / defaultnya *Vertikal*.
+            </p>
+            <ul>
+                <li><code>stretch</code>: Dipanjangkan memenuhi tinggi kontainer (default).</li>
+                <li><code>flex-start</code>: Menempel di atas.</li>
+                <li><code>flex-end</code>: Menempel di dasar kontainer.</li>
+                <li><code>center</code>: Berada persis di tengah secara vertikal.</li>
+            </ul>
+        </section>
+
+        <!-- 5. Direction, Wrap, dan Gap -->
+        <section id="direction-wrap">
+            <h2>5. Memutar Arah & Memberi Jarak</h2>
+
+            <h3>flex-direction</h3>
+            <p>Properti ini mendikte arah <strong>Sumbu Utama</strong>. Berpengaruh krusial karena ia memutar logic
+                `justify-content`.</p>
+            <p>Opsi: <code>row</code> (default Kiri-Kanan), <code>row-reverse</code> (Kanan-Kiri), <code>column</code>
+                (Atas-Bawah tegak), <code>column-reverse</code> (Bawah-Atas).</p>
+
+            <h3>flex-wrap</h3>
+            <p>Fleksibilitas sering kali membuat teks sesak jika dipaksa 1 baris. Dengan properti ini, anak-anak flex
+                diizinkan tumpah ke baris baru seperti teks bacaan (wrap).</p>
+            <p>Opsi: <code>nowrap</code> (default), <code>wrap</code>.</p>
+
+            <h3>gap</h3>
+            <p>Berhenti menggunakan margin kanan/kiri yang repot, gunakan <code>gap</code> pada container! Nilainya
+                berlaku murni sebagai jarak kosong ruang antara elemen baik horizontal maupun vertikal.</p>
+            <div class="code-container">
+                <pre><span class="token selector">.flex-parent</span> {
+    <span class="token property">display</span>: <span class="token value">flex</span>;
+    <span class="token property">gap</span>: <span class="token value">20px</span>; <span class="token comment">/* Jarak pasti 20px di antara semua item, ajaib! */</span>
+}</pre>
+            </div>
+        </section>
+
+        <!-- 6. Properti untuk Anak -->
+        <section id="flex-items">
+            <h2>6. Properti untuk Elemen Anak (Item)</h2>
+            <p>Meski sebagian besar diatur di kontainer Induk, ada satu fungsi kuat yang dimiliki flex item, yaitu
+                <strong>flex-grow</strong> / <strong>flex</strong>.</p>
+            <p>Properti <code>flex: 1;</code> pada sebuah anak (atau porsi `flex: 2;` untuk porsi dobel)
+                memerintahkannya untuk menelan, mengambil, meregangkan diri ke seluruh sisa ruang yang menganggur dari
+                baris tersebut.</p>
+        </section>
+
+        <!-- 7. Playground Flexbox -->
+        <section id="playground-gabungan">
+            <h2>7. ⭐ Ultimate Playground Flexbox</h2>
+            <p>Ganti opsi tarik-turun (dropdown) di bawah ini dan perhatikan letak angka dalam kotak di Pratinjau!</p>
+            <div class="playground">
+                <div class="controls">
+                    <div class="control-group">
+                        <label><code>flex-direction</code> (Arah)</label>
+                        <select id="pg-direction">
+                            <option value="row">row (default)</option>
+                            <option value="row-reverse">row-reverse</option>
+                            <option value="column">column</option>
+                            <option value="column-reverse">column-reverse</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <label><code>justify-content</code> (Main Axis)</label>
+                        <select id="pg-justify">
+                            <option value="flex-start">flex-start (default)</option>
+                            <option value="flex-end">flex-end</option>
+                            <option value="center">center</option>
+                            <option value="space-between">space-between</option>
+                            <option value="space-around">space-around</option>
+                            <option value="space-evenly">space-evenly</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <label><code>align-items</code> (Cross Axis)</label>
+                        <select id="pg-align">
+                            <option value="stretch">stretch (default)</option>
+                            <option value="flex-start">flex-start</option>
+                            <option value="flex-end">flex-end</option>
+                            <option value="center" selected>center</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <label><code>flex-wrap</code></label>
+                        <select id="pg-wrap">
+                            <option value="nowrap">nowrap (default)</option>
+                            <option value="wrap">wrap</option>
+                        </select>
+                    </div>
+
+                    <!-- Bonus custom trick - Just UI -->
+                    <div class="control-group"
+                        style="grid-column: span 2; display: flex; flex-direction: row; gap: 10px; align-items:center;">
+                        <button class="btn" style="background:#0ea5e9; padding: 5px 15px;" onclick="addBox()">+ Tambah
+                            Kotak</button>
+                        <button class="btn" style="background:#ef4444; padding: 5px 15px;" onclick="removeBox()">-
+                            Kurangi Kotak</button>
+                    </div>
+                </div>
+
+                <code>CSS Kontainer (Abu-abu): { <br>
+                &nbsp;&nbsp;display: flex; <br>
+                &nbsp;&nbsp;flex-direction: <span id="code-dir">row</span>; <br>
+                &nbsp;&nbsp;justify-content: <span id="code-jus">flex-start</span>; <br>
+                &nbsp;&nbsp;align-items: <span id="code-ali">center</span>; <br>
+                &nbsp;&nbsp;flex-wrap: <span id="code-wrap">nowrap</span>; <br>
+                &nbsp;&nbsp;gap: 10px; <br>
+                }</code>
+
+                <div class="preview-area" style="margin-top:20px;">
+                    <div class="flex-demo-container" id="flex-demo" style="gap: 10px; align-items: center;">
+                        <div class="flex-box">1</div>
+                        <div class="flex-box">2</div>
+                        <div class="flex-box">3</div>
+                        <div class="flex-box" style="padding: 40px 20px;">4 (Tinggi)</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. Latihan Praktik -->
+        <section id="latihan-praktik">
+            <h2>8. Latihan Praktik: Navbar Sederhana Flexbox</h2>
+            <p>Salah satu penggunaan flexbox paling populer adalah membuat bagian Header Web (Navbar). Kita ingin Logo
+                di ujung kiri, dan kumpulan menu ada di ujung sebelah kanan, sejajar teratur secara vertikal. Flexbox
+                `space-between` menyelamatkan kita!</p>
+
+            <div class="code-container">
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <pre><span class="token selector">&lt;style&gt;</span>
+  <span class="token selector">header</span> {
+    <span class="token property">display</span>: <span class="token value">flex</span>;
+    <span class="token property">justify-content</span>: <span class="token value">space-between</span>; <span class="token comment">/* Lempar menu ke sisi berseberangan */</span>
+    <span class="token property">align-items</span>: <span class="token value">center</span>;            <span class="token comment">/* Rata tengah secara gaya vertikal */</span>
+    <span class="token property">background-color</span>: <span class="token value">#1e293b</span>;
+    <span class="token property">padding</span>: <span class="token value">15px 30px</span>;
+    <span class="token property">color</span>: <span class="token value">white</span>;
+  }
+  
+  <span class="token selector">.logo</span> {
+    <span class="token property">font-size</span>: <span class="token value">24px</span>;
+    <span class="token property">font-weight</span>: <span class="token value">bold</span>;
+  }
+  
+  <span class="token selector">.nav-links</span> {
+    <span class="token property">display</span>: <span class="token value">flex</span>;                  <span class="token comment">/* Anaknya kontainer pun bisa menjadi Flex Parent lagi! */</span>
+    <span class="token property">gap</span>: <span class="token value">20px</span>;                      <span class="token comment">/* Jarak mulus tanpa repot margin */</span>
+    <span class="token property">list-style</span>: <span class="token value">none</span>;
+  }
+
+  <span class="token selector">.nav-links a</span> {
+    <span class="token property">color</span>: <span class="token value">#cbd5e1</span>;
+    <span class="token property">text-decoration</span>: <span class="token value">none</span>;
+  }
+<span class="token selector">&lt;/style&gt;</span>
+
+<span class="token selector">&lt;header&gt;</span>
+  <span class="token selector">&lt;div class="logo"&gt;</span>WebKu<span class="token selector">&lt;/div&gt;</span>
+  <span class="token selector">&lt;ul class="nav-links"&gt;</span>
+    <span class="token selector">&lt;li&gt;&lt;a href="#"&gt;</span>Home<span class="token selector">&lt;/a&gt;&lt;/li&gt;</span>
+    <span class="token selector">&lt;li&gt;&lt;a href="#"&gt;</span>Layanan<span class="token selector">&lt;/a&gt;&lt;/li&gt;</span>
+    <span class="token selector">&lt;li&gt;&lt;a href="#"&gt;</span>Kontak<span class="token selector">&lt;/a&gt;&lt;/li&gt;</span>
+  <span class="token selector">&lt;/ul&gt;</span>
+<span class="token selector">&lt;/header&gt;</span></pre>
+            </div>
+        </section>
+
+        <!-- 9. Kuis Interaktif -->
+        <section id="kuis">
+            <h2>9. Kuis Interaktif</h2>
+            <div class="quiz-container" id="quiz-block"></div>
+        </section>
+
+        <!-- 10. Ringkasan Akhir -->
+        <section id="ringkasan">
+            <h2>10. Ringkasan Akhir</h2>
+            <ul>
+                <li><strong><code>display: flex;</code></strong> dikenakan pada kontainer induk tempat bersemayamnya
+                    kotak-kotak anak.</li>
+                <li><strong><code>justify-content</code></strong> mengatur sejajar anak-anak pada Main Axis.
+                    (Geser-geser horizontal).</li>
+                <li><strong><code>align-items</code></strong> mengendalikan penyejajaran pada Cross Axis.
+                    (Cebol-jangkung vertikal).</li>
+                <li>Gunakan <strong><code>gap</code></strong> untuk spasi cepat sempurna antar flex items, dan
+                    tinggalkan metode repot berbalut `margin`!</li>
+                <li>Ingatlah, menguasai kombinasi <code>justify-content: center; align-items: center;</code> berarti
+                    tidak ada lagi derita menyusun elemen ke tengah halaman (*Absolute Centering* terselesaikan)!</li>
+            </ul>
+        </section>
+
+        <footer style="text-align: center; margin-top: 50px; color: var(--text-muted); font-size: 0.9rem;">
+            Materi Dasar-Dasar CSS Flexbox - Complete Interactive Learning Module
+        </footer>
+    </main>
+
+    <script>
+        // Copy Code Function
+        function copyCode(btn) {
+            const code = btn.nextElementSibling.innerText;
+            navigator.clipboard.writeText(code);
+            btn.innerText = 'Copied!';
+            setTimeout(() => btn.innerText = 'Copy', 2000);
+        }
+
+        // Flexbox Playground Script
+        const flexDemo = document.getElementById('flex-demo');
+
+        const selDir = document.getElementById('pg-direction');
+        const selJus = document.getElementById('pg-justify');
+        const selAli = document.getElementById('pg-align');
+        const selWrap = document.getElementById('pg-wrap');
+
+        const codDir = document.getElementById('code-dir');
+        const codJus = document.getElementById('code-jus');
+        const codAli = document.getElementById('code-ali');
+        const codWrap = document.getElementById('code-wrap');
+
+        function updateFlexContainer() {
+            flexDemo.style.flexDirection = selDir.value;
+            flexDemo.style.justifyContent = selJus.value;
+            flexDemo.style.alignItems = selAli.value;
+            flexDemo.style.flexWrap = selWrap.value;
+
+            codDir.innerText = selDir.value;
+            codJus.innerText = selJus.value;
+            codAli.innerText = selAli.value;
+            codWrap.innerText = selWrap.value;
+        }
+
+        selDir.addEventListener('change', updateFlexContainer);
+        selJus.addEventListener('change', updateFlexContainer);
+        selAli.addEventListener('change', updateFlexContainer);
+        selWrap.addEventListener('change', updateFlexContainer);
+
+        // Add/Remove boxes
+        let boxCounter = 4;
+        function addBox() {
+            boxCounter++;
+            const newBox = document.createElement('div');
+            newBox.className = 'flex-box';
+            newBox.innerText = boxCounter;
+
+            // Variasikan ukuran agar align-items lebih kerasa
+            if (boxCounter % 3 === 0) {
+                newBox.style.padding = '30px 20px';
+                newBox.style.backgroundColor = 'var(--flex-child-alt)';
+            }
+            flexDemo.appendChild(newBox);
+        }
+
+        function removeBox() {
+            if (flexDemo.children.length > 1) {
+                flexDemo.removeChild(flexDemo.lastChild);
+                boxCounter--;
+            }
+        }
+
+
+        // Quiz Logic
+        const questions = [
+            {
+                q: "1. Pada elemen default yang baru dikenakan `display: flex;`, ke arah mana properti `justify-content` mengatur elemen?",
+                o: ["Atas ke Bawah (Vertikal)", "Kiri ke Kanan (Horizontal)", "Membungkus ke baris baru", "Mengisi layar penuh"],
+                a: 1,
+                exp: "Karena secara default flex-direction adalah row (Kiri ke kanan), maka sumbu utamanya horizontal. Justify-content mengendalikan penyebaran dalam sumbu utama."
+            },
+            {
+                q: "2. Nilai `justify-content` manakah yang paling pas untuk membuat dua tombol terlempar saling berjauhan, satu di kiri penuh dan satu di kanan penuh, tanpa spasi sia-sia di sampingnya?",
+                o: ["center", "space-around", "space-evenly", "space-between"],
+                a: 3,
+                exp: "`space-between` menggunakan sisa ruangan yang ada diletakkan di celah antara elemen. Sehingga anak pinggiran sepenuhnya akan bersentuhan dengan ujung dari kontainer."
+            },
+            {
+                q: "3. Daripada menggunakan `margin` untuk memberi jarak 15px di antara sekumpulan elemen flex, properti flexbox sakti apa yang kini lebih disarankan?",
+                o: ["flex-margin: 15px;", "padding-box: 15px;", "gap: 15px;", "spacing: 15px;"],
+                a: 2,
+                exp: "`gap: 15px;` bertindak elegan membongkar spasi tepat DI ANTARA item-item dalam kontainer Flex/Grid secara ajaib dan responsif."
+            }
+        ];
+
+        const quizBlock = document.getElementById('quiz-block');
+
+        questions.forEach((q, idx) => {
+            const div = document.createElement('div');
+            div.className = 'question';
+            div.innerHTML = `<p><strong>${q.q}</strong></p>
+                <div class="options" id="options-${idx}">
+                    ${q.o.map((opt, i) => `<label><input type="radio" name="q${idx}" value="${i}"> ${opt}</label>`).join('')}
+                </div>
+                <button class="btn" style="margin-top:10px" onclick="checkAnswer(${idx})">Periksa Jawaban</button>
+                <div id="res-${idx}" class="result-msg"></div>`;
+            quizBlock.appendChild(div);
+        });
+
+        function checkAnswer(idx) {
+            const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+            const resDiv = document.getElementById(`res-${idx}`);
+            if (!selected) {
+                resDiv.innerText = "Pilih jawaban terlebih dahulu!";
+                resDiv.className = "result-msg wrong";
+                return;
+            }
+            if (parseInt(selected.value) === questions[idx].a) {
+                resDiv.innerHTML = `Benar! ${questions[idx].exp}`;
+                resDiv.className = "result-msg correct";
+            } else {
+                resDiv.innerHTML = `Salah. ${questions[idx].exp}`;
+                resDiv.className = "result-msg wrong";
+            }
+        }
+    </script>
+</body>
+
+</html>
