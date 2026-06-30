@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rekap CSS part 2</title>
+
+    <style>
+        .header {
+            border: 2px solid black;
+            padding: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            border: 2px solid darkcyan;
+        }
+
+        .pembungkus {
+            display: flex;
+            gap: 10px;
+            border: 2px solid darkcyan;
+        }
+
+        .item {
+            border: 2px solid red;
+        }
+
+        .main {
+            border: 2px solid black;
+            margin-top: 5px;
+            padding: 2px;
+            display: flex;
+            height: 100vh;
+        }
+
+        .sidebar {
+            border: 2px solid yellow;
+            flex: 2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .content {
+            border: 2px solid yellow;
+            flex: 4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="logo">Web ku</div>
+        <div class="pembungkus">
+            <div class="item">Item 1</div>
+            <div class="item">Item 2 ini sangat panjang</div>
+            <div class="item">Item 3</div>
+        </div>
+    </div>
+    <div class="main">
+        <div class="sidebar">Sidebar</div>
+        <div class="content">Content</div>
+    </div>
+</body>
+
+</html>

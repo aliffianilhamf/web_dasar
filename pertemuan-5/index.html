@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <!-- Meta tags untuk charset dan viewport (responsive) -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Page - Belajar Web Development</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <!-- HEADER - Bagian atas website dengan logo dan navigasi -->
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <div class="navbar-content">
+                    <!-- Logo/Branding -->
+                    <div class="logo">
+                        <h1>WebDev Academy</h1>
+                    </div>
+
+                    <!-- Menu Navigasi -->
+                    <ul class="nav-menu">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">Tentang</a></li>
+                        <li><a href="#videos">Video Tutorial</a></li>
+                        <li><a href="#courses">Daftar Kursus</a></li>
+                        <li><a href="#contact">Kontak</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- HERO SECTION - Bagian utama dengan call-to-action -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>Selamat Datang di WebDev Academy</h2>
+                <p>Belajar HTML, CSS, dan JavaScript dari dasar hingga mahir</p>
+                <button class="btn btn-primary">Mulai Belajar</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION - Bagian tentang kami -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2>Tentang Kami</h2>
+            <p>WebDev Academy adalah platform pembelajaran web development yang menyediakan tutorial lengkap dari HTML
+                dasar hingga framework JavaScript modern. Kami berkomitmen untuk membuat web development mudah dipahami
+                oleh semua orang.</p>
+        </div>
+    </section>
+
+    <!-- VIDEO SECTION - Contoh penggunaan iframe untuk embed video -->
+    <section id="videos" class="videos">
+        <div class="container">
+            <h2>Video Tutorial Terbaru</h2>
+
+            <!-- Grid untuk menampilkan video - responsive dengan CSS -->
+            <div class="videos-grid">
+                <!-- Video 1 - Iframe YouTube -->
+                <div class="video-item">
+                    <h3>HTML Dasar</h3>
+                    <!-- 
+                        IFRAME: Tag untuk embed konten dari website lain (YouTube, Google Maps, dll)
+                        - src: URL video atau konten yang di-embed
+                        - width/height: Ukuran iframe (akan di-override dengan CSS untuk responsif)
+                        - frameborder: Garis border (0 = tidak ada)
+                        - allow: Izin fitur yang dipakai (autoplay, fullscreen, dll)
+                        - allowfullscreen: Izin tampil fullscreen
+                    -->
+                    <iframe width="100%" height="300" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen>
+                    </iframe>
+                    <p>Pelajari struktur dasar HTML dan cara membuat halaman web pertama Anda.</p>
+                </div>
+
+                <!-- Video 2 - Iframe YouTube lain -->
+                <div class="video-item">
+                    <h3>CSS Styling</h3>
+                    <iframe width="100%" height="300" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen>
+                    </iframe>
+                    <p>Menguasai CSS untuk membuat desain website yang menarik dan profesional.</p>
+                </div>
+
+                <!-- Video 3 - Iframe YouTube lain -->
+                <div class="video-item">
+                    <h3>JavaScript Interaktif</h3>
+                    <iframe width="100%" height="300" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen>
+                    </iframe>
+                    <p>Tambahkan interaktivitas ke website Anda dengan JavaScript.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COURSES SECTION - Menampilkan tabel daftar kursus -->
+    <section id="courses" class="courses">
+        <div class="container">
+            <h2>Daftar Kursus Kami</h2>
+
+            <!-- 
+                TABLE: Elemen untuk menampilkan data dalam format baris dan kolom
+                - <thead>: Header tabel (judul kolom)
+                - <tbody>: Isi tabel (data)
+                - <tr>: Table row (baris)
+                - <th>: Table header (header kolom)
+                - <td>: Table data (sel data)
+            -->
+            <div class="table-responsive">
+                <table class="courses-table">
+                    <!-- Header tabel -->
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama Kursus</th>
+                            <th>Durasi</th>
+                            <th>Level</th>
+                            <th>Harga</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <!-- Body tabel - Isi data kursus -->
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>HTML & CSS Dasar</td>
+                            <td>2 Minggu</td>
+                            <td>Pemula</td>
+                            <td>Rp 199.000</td>
+                            <td><span class="badge badge-available">Tersedia</span></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>JavaScript Fundamental</td>
+                            <td>3 Minggu</td>
+                            <td>Pemula</td>
+                            <td>Rp 249.000</td>
+                            <td><span class="badge badge-available">Tersedia</span></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Responsive Web Design</td>
+                            <td>2 Minggu</td>
+                            <td>Menengah</td>
+                            <td>Rp 299.000</td>
+                            <td><span class="badge badge-available">Tersedia</span></td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>React.js Basics</td>
+                            <td>4 Minggu</td>
+                            <td>Menengah</td>
+                            <td>Rp 399.000</td>
+                            <td><span class="badge badge-soon">Segera Hadir</span></td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>Web Development Master</td>
+                            <td>12 Minggu</td>
+                            <td>Lanjutan</td>
+                            <td>Rp 999.000</td>
+                            <td><span class="badge badge-available">Tersedia</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION - Bagian kontak -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>Hubungi Kami</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Informasi Kontak</h3>
+                    <p><strong>Email:</strong> info@webdevacademy.com</p>
+                    <p><strong>Phone:</strong> +62 812-3456-7890</p>
+                    <p><strong>Alamat:</strong> Jl. Web Development No. 123, Jakarta</p>
+                </div>
+                <div class="contact-form">
+                    <h3>Kirim Pesan</h3>
+                    <form>
+                        <input type="text" placeholder="Nama Anda" required>
+                        <input type="email" placeholder="Email Anda" required>
+                        <textarea placeholder="Pesan Anda" rows="5" required></textarea>
+                        <button type="submit" class="btn btn-primary">Kirim</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER - Bagian bawah website -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 WebDev Academy. Semua hak dilindungi.</p>
+        </div>
+    </footer>
+</body>
+
+</html>

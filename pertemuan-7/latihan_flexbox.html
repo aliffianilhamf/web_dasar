@@ -1,0 +1,39 @@
+<style>
+    header {
+        display: flex;
+        justify-content: space-between;
+        /* Lempar menu ke sisi berseberangan */
+        align-items: center;
+        /* Rata tengah secara gaya vertikal */
+        background-color: #1e293b;
+        padding: 15px 30px;
+        color: white;
+    }
+
+    .logo {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .nav-links {
+        display: flex;
+        /* Anaknya kontainer pun bisa menjadi Flex Parent lagi! */
+        gap: 20px;
+        /* Jarak mulus tanpa repot margin */
+        list-style: none;
+    }
+
+    .nav-links a {
+        color: #cbd5e1;
+        text-decoration: none;
+    }
+</style>
+
+<header>
+    <div class="logo">WebKu</div>
+    <ul class="nav-links">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Layanan</a></li>
+        <li><a href="#">Kontak</a></li>
+    </ul>
+</header>

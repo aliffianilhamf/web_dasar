@@ -1,0 +1,538 @@
+/* ============================================
+   RESPONSIVE WEB DESIGN - LANDING PAGE
+   
+   File ini mendemonstrasikan:
+   1. Mobile-First Approach (styling mobile dulu, baru desktop)
+   2. Media Queries (untuk responsive design)
+   3. Flexbox (untuk layout yang fleksibel)
+   4. CSS Grid (untuk grid layout)
+   5. Styling tabel yang responsive
+   
+   ============================================ */
+
+/* ============================================
+   1. RESET & GLOBAL STYLES
+   ============================================ */
+
+/* Reset default browser styles */
+* {
+    margin: 0;           /* Hapus margin default */
+    padding: 0;          /* Hapus padding default */
+    box-sizing: border-box; /* Box model: padding & border termasuk dalam width */
+}
+
+/* Styling global untuk body */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Font yang mudah dibaca */
+    line-height: 1.6;    /* Jarak antar baris untuk readability */
+    color: #333;         /* Warna teks abu-abu gelap */
+    background-color: #f4f4f4; /* Warna background terang */
+}
+
+/* ============================================
+   2. CONTAINER - Wrapper untuk content
+   ============================================ */
+
+/* Container: membatasi lebar maksimal content dan center */
+.container {
+    max-width: 1200px;   /* Lebar maksimal container */
+    margin: 0 auto;      /* Center horizontally */
+    padding: 0 20px;     /* Padding untuk jarak dari tepi */
+}
+
+/* ============================================
+   3. HEADER & NAVBAR - Navigasi utama
+   ============================================ */
+
+/* Header: bagian atas website */
+header {
+    background-color: #2c3e50;  /* Warna background gelap */
+    color: white;               /* Warna teks putih */
+    padding: 0;                 /* Tidak perlu padding di sini */
+    position: sticky;           /* Navbar tetap di atas saat scroll */
+    top: 0;
+    z-index: 100;               /* Agar navbar di atas semua elemen lain */
+}
+
+/* Navbar container - menggunakan flexbox untuk layout horizontal */
+.navbar-content {
+    display: flex;               /* Aktifkan flexbox */
+    justify-content: space-between; /* Pisahkan logo dan menu */
+    align-items: center;         /* Align vertikal center */
+    padding: 15px 0;             /* Padding atas-bawah */
+}
+
+/* Logo/Branding */
+.logo h1 {
+    font-size: 24px;             /* Ukuran font logo */
+    font-weight: bold;           /* Font tebal */
+    margin: 0;                   /* Hapus margin default h1 */
+}
+
+/* Menu navigasi - flexbox untuk layout horizontal */
+.nav-menu {
+    display: flex;               /* Layout horizontal */
+    list-style: none;            /* Hapus bullet points */
+    gap: 30px;                   /* Jarak antar menu items */
+}
+
+/* Link di menu navigasi */
+.nav-menu a {
+    color: white;                /* Warna teks putih */
+    text-decoration: none;       /* Hapus garis bawah link */
+    font-weight: 500;            /* Font semi-bold */
+    transition: color 0.3s ease; /* Smooth transition warna */
+}
+
+/* Hover effect - ketika mouse hover ke link */
+.nav-menu a:hover {
+    color: #3498db;              /* Berubah ke biru saat hover */
+}
+
+/* ============================================
+   4. HERO SECTION - Section utama
+   ============================================ */
+
+/* Hero section: bagian besar dengan CTA */
+.hero {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* Gradient background */
+    color: white;                /* Warna teks putih */
+    padding: 80px 0;             /* Padding atas-bawah besar */
+    text-align: center;          /* Center text */
+}
+
+/* Content di hero section */
+.hero-content h2 {
+    font-size: 48px;             /* Ukuran heading besar */
+    margin-bottom: 20px;         /* Margin bawah */
+    font-weight: bold;           /* Font tebal */
+}
+
+.hero-content p {
+    font-size: 20px;             /* Ukuran teks lebih besar */
+    margin-bottom: 30px;         /* Margin bawah */
+    opacity: 0.9;                /* Transparansi sedikit */
+}
+
+/* ============================================
+   5. BUTTONS - Styling tombol
+   ============================================ */
+
+/* Base styling untuk semua button */
+.btn {
+    padding: 12px 30px;          /* Padding dalam tombol */
+    border: none;                /* Tidak ada border */
+    border-radius: 5px;          /* Sudut membulat sedikit */
+    cursor: pointer;             /* Pointer saat hover */
+    font-size: 16px;             /* Ukuran font */
+    font-weight: 600;            /* Font semi-bold */
+    transition: all 0.3s ease;   /* Smooth transition */
+}
+
+/* Primary button - warna utama */
+.btn-primary {
+    background-color: #3498db;   /* Warna biru */
+    color: white;                /* Teks putih */
+}
+
+/* Hover effect primary button */
+.btn-primary:hover {
+    background-color: #2980b9;   /* Biru lebih gelap saat hover */
+    transform: translateY(-2px); /* Efek naik sedikit */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Tambah shadow */
+}
+
+/* ============================================
+   6. ABOUT SECTION - Bagian tentang
+   ============================================ */
+
+/* About section */
+.about {
+    background-color: white;     /* Background putih */
+    padding: 60px 0;             /* Padding atas-bawah */
+}
+
+.about h2 {
+    font-size: 36px;             /* Ukuran heading */
+    margin-bottom: 20px;         /* Margin bawah */
+    text-align: center;          /* Center text */
+    color: #2c3e50;              /* Warna teks gelap */
+}
+
+.about p {
+    font-size: 16px;             /* Ukuran font normal */
+    text-align: center;          /* Center text */
+    line-height: 1.8;            /* Jarak baris */
+    max-width: 600px;            /* Lebar maksimal */
+    margin: 0 auto;              /* Center block */
+    color: #555;                 /* Warna teks abu-abu */
+}
+
+/* ============================================
+   7. VIDEOS SECTION - Dengan iframe
+   ============================================ */
+
+/* Videos section */
+.videos {
+    background-color: #f9f9f9;   /* Background abu-abu terang */
+    padding: 60px 0;             /* Padding atas-bawah */
+}
+
+.videos h2 {
+    font-size: 36px;             /* Ukuran heading */
+    margin-bottom: 40px;         /* Margin bawah */
+    text-align: center;          /* Center text */
+    color: #2c3e50;              /* Warna teks gelap */
+}
+
+/* Grid untuk video - CSS GRID untuk layout video */
+.videos-grid {
+    display: grid;               /* Aktifkan CSS Grid */
+    grid-template-columns: 1fr;  /* 1 kolom (mobile) */
+    gap: 30px;                   /* Jarak antar item */
+}
+
+/* Item video */
+.video-item {
+    background-color: white;     /* Background putih */
+    border-radius: 8px;          /* Sudut membulat */
+    overflow: hidden;            /* Jangan overflow content */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: transform 0.3s ease; /* Smooth transition */
+}
+
+/* Hover effect pada video item */
+.video-item:hover {
+    transform: translateY(-5px); /* Naik sedikit saat hover */
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15); /* Shadow lebih besar */
+}
+
+/* Heading di video item */
+.video-item h3 {
+    padding: 20px;               /* Padding di dalam */
+    background-color: #ecf0f1;   /* Background abu-abu terang */
+    font-size: 18px;             /* Ukuran font */
+    color: #2c3e50;              /* Warna teks gelap */
+    margin-bottom: 0;            /* Tidak ada margin bawah */
+}
+
+/* Iframe responsive - fix aspek ratio */
+.video-item iframe {
+    display: block;              /* Block element agar responsive */
+    width: 100%;                 /* Lebar 100% */
+    height: auto;                /* Height otomatis */
+    aspect-ratio: 16/9;          /* Aspek ratio 16:9 */
+}
+
+/* Paragraph di video item */
+.video-item p {
+    padding: 15px 20px;          /* Padding */
+    font-size: 14px;             /* Ukuran font lebih kecil */
+    color: #666;                 /* Warna teks abu-abu */
+    line-height: 1.5;            /* Jarak baris */
+}
+
+/* ============================================
+   8. COURSES SECTION - Dengan Table
+   ============================================ */
+
+/* Courses section */
+.courses {
+    background-color: white;     /* Background putih */
+    padding: 60px 0;             /* Padding atas-bawah */
+}
+
+.courses h2 {
+    font-size: 36px;             /* Ukuran heading */
+    margin-bottom: 40px;         /* Margin bawah */
+    text-align: center;          /* Center text */
+    color: #2c3e50;              /* Warna teks gelap */
+}
+
+/* Wrapper table untuk horizontal scroll di mobile */
+.table-responsive {
+    overflow-x: auto;            /* Scroll horizontal jika perlu */
+    border-radius: 8px;          /* Sudut membulat */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Shadow */
+}
+
+/* Table styling */
+.courses-table {
+    width: 100%;                 /* Lebar 100% */
+    border-collapse: collapse;   /* Collapse border */
+    background-color: white;     /* Background putih */
+}
+
+/* Header tabel */
+.courses-table thead {
+    background-color: #34495e;   /* Background gelap */
+    color: white;                /* Teks putih */
+}
+
+/* Header cell */
+.courses-table th {
+    padding: 15px;               /* Padding dalam cell */
+    text-align: left;            /* Text align kiri */
+    font-weight: bold;           /* Font tebal */
+    border-bottom: 2px solid #2c3e50; /* Border bawah */
+}
+
+/* Table data cell */
+.courses-table td {
+    padding: 12px 15px;          /* Padding dalam cell */
+    border-bottom: 1px solid #ecf0f1; /* Border bawah subtle */
+}
+
+/* Alternating row colors untuk readability (zebra striping) */
+.courses-table tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;   /* Abu-abu terang untuk baris ganjil */
+}
+
+/* Hover effect pada baris tabel */
+.courses-table tbody tr:hover {
+    background-color: #ecf0f1;   /* Highlight saat hover */
+}
+
+/* Badge styling - untuk status */
+.badge {
+    display: inline-block;       /* Inline-block element */
+    padding: 5px 12px;           /* Padding kecil */
+    border-radius: 20px;         /* Sudut sangat membulat (pill shape) */
+    font-size: 12px;             /* Font kecil */
+    font-weight: 600;            /* Font semi-bold */
+}
+
+/* Badge warna available (hijau) */
+.badge-available {
+    background-color: #2ecc71;   /* Warna hijau */
+    color: white;                /* Teks putih */
+}
+
+/* Badge warna soon (kuning) */
+.badge-soon {
+    background-color: #f39c12;   /* Warna kuning */
+    color: white;                /* Teks putih */
+}
+
+/* ============================================
+   9. CONTACT SECTION - Kontak
+   ============================================ */
+
+/* Contact section */
+.contact {
+    background-color: #f9f9f9;   /* Background abu-abu terang */
+    padding: 60px 0;             /* Padding atas-bawah */
+}
+
+.contact h2 {
+    font-size: 36px;             /* Ukuran heading */
+    margin-bottom: 40px;         /* Margin bawah */
+    text-align: center;          /* Center text */
+    color: #2c3e50;              /* Warna teks gelap */
+}
+
+/* Contact content - grid untuk layout dua kolom */
+.contact-content {
+    display: grid;               /* Aktifkan Grid */
+    grid-template-columns: 1fr;  /* 1 kolom (mobile) */
+    gap: 40px;                   /* Jarak antar item */
+}
+
+/* Contact info styling */
+.contact-info h3,
+.contact-form h3 {
+    font-size: 22px;             /* Ukuran heading */
+    margin-bottom: 20px;         /* Margin bawah */
+    color: #2c3e50;              /* Warna teks gelap */
+}
+
+.contact-info p {
+    margin-bottom: 15px;         /* Margin bawah */
+    color: #555;                 /* Warna teks abu-abu */
+    line-height: 1.8;            /* Jarak baris */
+}
+
+/* Form input styling */
+.contact-form input,
+.contact-form textarea {
+    width: 100%;                 /* Lebar 100% */
+    padding: 12px;               /* Padding dalam */
+    margin-bottom: 15px;         /* Margin bawah */
+    border: 1px solid #ddd;      /* Border abu-abu terang */
+    border-radius: 4px;          /* Sudut membulat sedikit */
+    font-family: inherit;        /* Inherit font dari parent */
+    font-size: 14px;             /* Ukuran font */
+    transition: border-color 0.3s ease; /* Smooth transition */
+}
+
+/* Focus effect pada input */
+.contact-form input:focus,
+.contact-form textarea:focus {
+    outline: none;               /* Hapus outline default */
+    border-color: #3498db;       /* Border berubah biru saat focus */
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.3); /* Subtle blue shadow */
+}
+
+/* ============================================
+   10. FOOTER - Bagian bawah
+   ============================================ */
+
+/* Footer */
+footer {
+    background-color: #2c3e50;   /* Warna background gelap */
+    color: white;                /* Teks putih */
+    text-align: center;          /* Center text */
+    padding: 30px 0;             /* Padding atas-bawah */
+}
+
+footer p {
+    margin: 0;                   /* Tidak ada margin */
+    font-size: 14px;             /* Ukuran font kecil */
+}
+
+/* ============================================
+   11. RESPONSIVE DESIGN - Media Queries
+   ============================================ */
+
+/* 
+   MEDIA QUERY: CSS yang berubah berdasarkan ukuran layar
+   
+   Mobile-First Approach:
+   1. Styling default untuk mobile (ukuran kecil)
+   2. Media query untuk tablet dan desktop
+   
+   Breakpoints standar:
+   - Mobile: < 768px
+   - Tablet: 768px - 1024px
+   - Desktop: > 1024px
+*/
+
+/* ====== TABLET (768px keatas) ====== */
+@media (min-width: 768px) {
+    
+    /* Navbar menu - horizontal layout */
+    .nav-menu {
+        gap: 40px;               /* Jarak antar menu lebih besar */
+    }
+    
+    /* Hero section - heading lebih besar */
+    .hero-content h2 {
+        font-size: 56px;         /* Ukuran lebih besar */
+    }
+    
+    /* Videos grid - 2 kolom untuk tablet */
+    .videos-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 kolom */
+    }
+    
+    /* Contact content - 2 kolom bersebelahan */
+    .contact-content {
+        grid-template-columns: 1fr 1fr; /* 2 kolom bersebelahan */
+    }
+}
+
+/* ====== DESKTOP (1024px keatas) ====== */
+@media (min-width: 1024px) {
+    
+    /* Hero section - heading lebih besar lagi */
+    .hero-content h2 {
+        font-size: 64px;         /* Ukuran lebih besar */
+    }
+    
+    .hero-content p {
+        font-size: 22px;         /* Ukuran teks lebih besar */
+    }
+    
+    /* Videos grid - 3 kolom untuk desktop */
+    .videos-grid {
+        grid-template-columns: repeat(3, 1fr); /* 3 kolom */
+    }
+}
+
+/* ====== EXTRA LARGE (1440px keatas) ====== */
+@media (min-width: 1440px) {
+    
+    /* Container - maksimal lebih besar */
+    .container {
+        max-width: 1400px;       /* Lebar maksimal lebih besar */
+    }
+    
+    /* Hero padding lebih besar */
+    .hero {
+        padding: 120px 0;        /* Padding lebih besar */
+    }
+    
+    /* Section padding lebih besar */
+    .about,
+    .videos,
+    .courses,
+    .contact {
+        padding: 80px 0;         /* Padding lebih besar */
+    }
+}
+
+/* ============================================
+   12. UTILITY CLASSES - Helper classes
+   ============================================ */
+
+/* Clearfix - untuk membersihkan float (jika masih menggunakan float) */
+.clearfix::after {
+    content: "";                 /* Pseudoelement content */
+    display: table;              /* Display sebagai table */
+    clear: both;                 /* Clear float */
+}
+
+/* Text alignment */
+.text-center {
+    text-align: center;          /* Center text */
+}
+
+.text-left {
+    text-align: left;            /* Text align kiri */
+}
+
+.text-right {
+    text-align: right;           /* Text align kanan */
+}
+
+/* ============================================
+   PENJELASAN KONSEP PENTING:
+   ============================================
+   
+   1. FLEXBOX (display: flex)
+      - Layout satu dimensi (baris atau kolom)
+      - Properti penting: justify-content, align-items, gap
+      - Cocok untuk: navbar, button groups, row layouts
+   
+   2. CSS GRID (display: grid)
+      - Layout dua dimensi (baris dan kolom)
+      - Properti penting: grid-template-columns, grid-template-rows, gap
+      - Cocok untuk: video gallery, dashboard, page layouts
+   
+   3. RESPONSIVE DESIGN
+      - Mobile-First: CSS default untuk mobile, media query untuk besar
+      - Breakpoints: 768px (tablet), 1024px (desktop)
+      - Teknik: %width, max-width, media query, flex, grid
+   
+   4. BOX MODEL
+      - margin: jarak di luar elemen
+      - border: garis tepi elemen
+      - padding: jarak dalam elemen
+      - width/height: ukuran content box (dengan box-sizing: border-box)
+   
+   5. TRANSITIONS & TRANSFORMS
+      - transition: smooth change dari satu state ke state lain
+      - transform: translateY, scale, rotate tanpa mempengaruhi layout
+      - Cocok untuk: hover effects, animations
+   
+   6. IFRAME (HTML)
+      - Embed konten dari website lain
+      - Perlu wrapper div untuk membuat responsive
+      - Properti: src, width, height, frameborder, allow, allowfullscreen
+   
+   7. TABLE (HTML)
+      - Menampilkan data tabular
+      - Struktur: <table> > <thead>/<tbody> > <tr> > <th>/<td>
+      - CSS: border-collapse, nth-child() untuk striping
+   
+   ============================================
